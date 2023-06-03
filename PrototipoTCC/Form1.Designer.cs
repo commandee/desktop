@@ -30,9 +30,11 @@
         {
             this.btnCadastrar = new System.Windows.Forms.Button();
             this.txtEmail = new System.Windows.Forms.TextBox();
-            this.textBox2 = new System.Windows.Forms.TextBox();
+            this.txtSenha = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
+            this.label3 = new System.Windows.Forms.Label();
+            this.txtRestaurant = new System.Windows.Forms.TextBox();
             this.SuspendLayout();
             // 
             // btnCadastrar
@@ -53,12 +55,12 @@
             this.txtEmail.Size = new System.Drawing.Size(417, 29);
             this.txtEmail.TabIndex = 1;
             // 
-            // textBox2
+            // txtSenha
             // 
-            this.textBox2.Location = new System.Drawing.Point(74, 79);
-            this.textBox2.Name = "textBox2";
-            this.textBox2.Size = new System.Drawing.Size(417, 29);
-            this.textBox2.TabIndex = 2;
+            this.txtSenha.Location = new System.Drawing.Point(74, 79);
+            this.txtSenha.Name = "txtSenha";
+            this.txtSenha.Size = new System.Drawing.Size(417, 29);
+            this.txtSenha.TabIndex = 2;
             // 
             // label1
             // 
@@ -78,14 +80,32 @@
             this.label2.TabIndex = 4;
             this.label2.Text = "Senha:";
             // 
+            // label3
+            // 
+            this.label3.AutoSize = true;
+            this.label3.Location = new System.Drawing.Point(523, 15);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(161, 21);
+            this.label3.TabIndex = 5;
+            this.label3.Text = "Nome do restaurante:";
+            // 
+            // txtRestaurant
+            // 
+            this.txtRestaurant.Location = new System.Drawing.Point(690, 12);
+            this.txtRestaurant.Name = "txtRestaurant";
+            this.txtRestaurant.Size = new System.Drawing.Size(498, 29);
+            this.txtRestaurant.TabIndex = 6;
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 21F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1200, 727);
+            this.Controls.Add(this.txtRestaurant);
+            this.Controls.Add(this.label3);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.label1);
-            this.Controls.Add(this.textBox2);
+            this.Controls.Add(this.txtSenha);
             this.Controls.Add(this.txtEmail);
             this.Controls.Add(this.btnCadastrar);
             this.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
@@ -102,9 +122,11 @@
 
         private System.Windows.Forms.Button btnCadastrar;
         private System.Windows.Forms.TextBox txtEmail;
-        private System.Windows.Forms.TextBox textBox2;
+        private System.Windows.Forms.TextBox txtSenha;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.Label label3;
+        private System.Windows.Forms.TextBox txtRestaurant;
     }
 }
 

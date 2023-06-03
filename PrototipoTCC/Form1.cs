@@ -30,18 +30,22 @@ namespace PrototipoTCC
         private void button1_Click(object sender, EventArgs e)
         {
             String email = txtEmail.Text.Trim(); 
-            String senha = textBox2.Text.Trim();
+            String senha = txtSenha.Text.Trim();
+            String restaurantName = txtRestaurant.Text.Trim();
            
             if (DAO_Conexao.login(email,senha) == true)
             {
                 MessageBox.Show("Usuário é um funcionário.", "Alerta do Sistema", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                if (DAO_Conexao.verificaAdmin(email) == true)
+                if (DAO_Conexao.verificaAdmin(email, restaurantName) == true)
                 {
-                    MessageBox.Show("Usuário é um administrador.", "Alerta do Sistema", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    MessageBox.Show("Seja bem vindo!", "Alerta do Sistema", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    Form2 form2 = new Form2();
+                    form2.Show();
                 }
                 else
                 {
-                    MessageBox.Show("Usuário é um funcionário comum.", "Alerta do Sistema", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    MessageBox.Show("Você não tem acesso ao restaurante.", "Alerta do Sistema", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    Console.Write("aaaa");
                 }
             }
             else
@@ -53,7 +57,9 @@ namespace PrototipoTCC
 
         private void Form1_Load(object sender, EventArgs e)
         {
-          
+            txtEmail.Text = "nacrai@gmail.com";
+            txtSenha.Text = "aaaaaaaaaaaaaaaaaaaaaaaa";
+            txtRestaurant.Text = "Augustas";
         }
     }
 }
