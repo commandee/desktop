@@ -10,16 +10,16 @@ using System.Windows.Forms;
 
 namespace PrototipoTCC
 {
-    public partial class Form1 : Form
+    public partial class frmLogin : Form
     {
        
-        public Form1()
+        public frmLogin()
         {
             CommandeeData commandeedata = new CommandeeData();
             InitializeComponent();
             if (DAO_Conexao.getConexao(commandeedata.local, commandeedata.banco, commandeedata.user, commandeedata.password))
             {
-                MessageBox.Show("Conectado ao banco de dados.", "Alerta do Sistema", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                
                 Console.WriteLine("Conectado.");
             } else
             {
@@ -27,19 +27,19 @@ namespace PrototipoTCC
             }
         }
 
-        private void button1_Click(object sender, EventArgs e)
+        private void btnLogin_Click(object sender, EventArgs e)
         {
-            String email = txtEmail.Text.Trim(); 
+            String email = txtEmail.Text.Trim();
             String senha = txtSenha.Text.Trim();
             String restaurantName = txtRestaurant.Text.Trim();
-           
-            if (DAO_Conexao.login(email,senha) == true)
+
+            if (DAO_Conexao.login(email, senha) == true)
             {
                 MessageBox.Show("Usuário é um funcionário.", "Alerta do Sistema", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 if (DAO_Conexao.verificaAdmin(email, restaurantName) == true)
                 {
                     MessageBox.Show("Seja bem vindo!", "Alerta do Sistema", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                    Form2 form2 = new Form2();
+                    frmData form2 = new frmData();
                     form2.Show();
                 }
                 else
@@ -55,10 +55,12 @@ namespace PrototipoTCC
 
         }
 
-        private void Form1_Load(object sender, EventArgs e)
+        private void frmLogin_Load(object sender, EventArgs e)
         {
             txtEmail.Text = "nacrai@gmail.com";
+            //txtEmail.Text = "isa@email.com";
             txtSenha.Text = "aaaaaaaaaaaaaaaaaaaaaaaa";
+            //txtSenha.Text = "$2a$10$0IgeNIMoENdke2FW3do1ZeFGJEmI..ddOoiqHvCtffwK1JxPnsr5i";
             txtRestaurant.Text = "Augustas";
         }
     }
