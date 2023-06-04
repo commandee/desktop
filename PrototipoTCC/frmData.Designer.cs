@@ -52,7 +52,7 @@
             this.dgPedidos.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dgPedidos.Location = new System.Drawing.Point(257, 24);
             this.dgPedidos.Name = "dgPedidos";
-            this.dgPedidos.Size = new System.Drawing.Size(1165, 528);
+            this.dgPedidos.Size = new System.Drawing.Size(624, 528);
             this.dgPedidos.TabIndex = 1;
             // 
             // btnTotal
@@ -93,6 +93,7 @@
             this.btnMenosPedido.TabIndex = 8;
             this.btnMenosPedido.Text = "Item menos pedido";
             this.btnMenosPedido.UseVisualStyleBackColor = true;
+            this.btnMenosPedido.Click += new System.EventHandler(this.btnMenosPedido_Click);
             // 
             // frmData
             // 
@@ -109,6 +110,7 @@
             this.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.Name = "frmData";
             this.Text = "Form2";
+            this.Load += new System.EventHandler(this.frmData_Load);
             ((System.ComponentModel.ISupportInitialize)(this.dgPedidos)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
