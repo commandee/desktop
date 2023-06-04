@@ -31,7 +31,9 @@ namespace PrototipoTCC
 
         private void btnTotal_Click(object sender, EventArgs e)
         {
-            dgPedidos.Enabled = false;
+            btnMaisPedido.Enabled = true;
+            btnMenosPedido.Enabled = true;
+            btnPrioridade.Enabled = true;
             try
             {
                 if (DAO_Conexao.con.State == ConnectionState.Open)
@@ -191,6 +193,7 @@ namespace PrototipoTCC
 
         private void frmData_Load(object sender, EventArgs e)
         {
+            dgPedidos.Enabled = false;
             btnMaisPedido.Enabled = false;
             btnMenosPedido.Enabled = false;
             btnPrioridade.Enabled = false;

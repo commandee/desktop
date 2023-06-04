@@ -100,7 +100,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 21F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1200, 727);
+            this.ClientSize = new System.Drawing.Size(1200, 205);
             this.Controls.Add(this.txtRestaurant);
             this.Controls.Add(this.label3);
             this.Controls.Add(this.label2);

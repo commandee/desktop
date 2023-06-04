@@ -52,7 +52,7 @@
             this.dgPedidos.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dgPedidos.Location = new System.Drawing.Point(257, 24);
             this.dgPedidos.Name = "dgPedidos";
-            this.dgPedidos.Size = new System.Drawing.Size(624, 528);
+            this.dgPedidos.Size = new System.Drawing.Size(595, 528);
             this.dgPedidos.TabIndex = 1;
             // 
             // btnTotal
@@ -99,7 +99,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 21F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1434, 1061);
+            this.ClientSize = new System.Drawing.Size(863, 568);
             this.Controls.Add(this.btnMenosPedido);
             this.Controls.Add(this.btnPrioridade);
             this.Controls.Add(this.btnMaisPedido);
