@@ -19,7 +19,6 @@ namespace PrototipoTCC
         }
         bool consulta = false;
         bool delete = false;
-        bool ativo = true;
         public void updateTable()
         {
 
@@ -58,6 +57,8 @@ namespace PrototipoTCC
             updateTable();
             consulta = true;
             delete = false;
+            txtSpec.Visible = false;
+            btnConfirma.Visible = false;
             txtBusca.Visible = true;
             btnBusca.Visible = true;
             txtBusca.Text = "Insira o email do funcionário";
@@ -85,8 +86,7 @@ namespace PrototipoTCC
 
         private void txtConsulta_Enter(object sender, EventArgs e)
         {
-            txtSpec.Visible = false;
-            btnConfirma.Visible = false;
+
             dgvEmployee.ClearSelection();
             txtSpec.Text = "";
             txtSpec.ForeColor = Color.Black;
@@ -99,12 +99,15 @@ namespace PrototipoTCC
 
         private void btnRemv_Click(object sender, EventArgs e)
         {
+            updateTable();
             txtBusca.Visible = false;
             btnBusca.Visible = false;
+            
             dgvEmployee.ClearSelection();
             delete = true;
             consulta = false;
             txtSpec.Visible = true;
+            btnConfirma.Visible = true;
             txtSpec.Text = "Insira o email do funcionário";
             txtSpec.ForeColor = Color.Gray;
         }
@@ -141,29 +144,36 @@ namespace PrototipoTCC
                 }
                 if (foundRow)
                 {
-                    DialogResult result = MessageBox.Show("Deseja remover este funcionário?", "Alerta do Sistema", MessageBoxButtons.YesNoCancel, MessageBoxIcon.Question);
-                    if (result == DialogResult.Yes)
+                    if (txtSpec.Text == "nacrai@gmail.com")
                     {
-                        try
+                        MessageBox.Show("Este funcionário não pode ser removido.", "Alerta do Sistema", MessageBoxButtons.OKCancel, MessageBoxIcon.Error);
+                    }else
+                    {
+                        DialogResult result = MessageBox.Show("Deseja remover este funcionário?", "Alerta do Sistema", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+                        if (result == DialogResult.Yes)
                         {
-                            if (DAO_Conexao.con.State == ConnectionState.Open)
+                            try
                             {
+                                if (DAO_Conexao.con.State == ConnectionState.Open)
+                                {
+                                    DAO_Conexao.con.Close();
+                                }
+                                DAO_Conexao.con.Open();
+                                string sql = "DELETE FROM `Employee` WHERE `email` = '" + emailToSelect + "'";
+                                MySqlCommand command = new MySqlCommand(sql, DAO_Conexao.con);
+                                command.ExecuteNonQuery();
+                                updateTable();
+                                dgvEmployee.ClearSelection();
                                 DAO_Conexao.con.Close();
                             }
-                            DAO_Conexao.con.Open();
-                            string sql = "DELETE FROM `Employee` WHERE `email` = '" + emailToSelect + "'";
-                            MySqlCommand command = new MySqlCommand(sql, DAO_Conexao.con);
-                            command.ExecuteNonQuery();
-                            updateTable();
-                            dgvEmployee.ClearSelection();
-                            DAO_Conexao.con.Close();
-                        }
-                        catch (Exception ex)
-                        {
-                            Console.WriteLine(ex.Message);
-                        }
+                            catch (Exception ex)
+                            {
+                                Console.WriteLine(ex.Message);
+                            }
 
+                        }
                     }
+                    
 
                 }
                 else
@@ -196,6 +206,8 @@ namespace PrototipoTCC
 
         private void txtBusca_Enter(object sender, EventArgs e)
         {
+            txtSpec.Visible = false;
+            btnConfirma.Visible = false;
             txtBusca.Text = "";
             txtBusca.ForeColor = Color.Black;
         }
