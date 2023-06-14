@@ -56,7 +56,7 @@
             // 
             this.txtEmail.Location = new System.Drawing.Point(80, 12);
             this.txtEmail.Name = "txtEmail";
-            this.txtEmail.Size = new System.Drawing.Size(503, 29);
+            this.txtEmail.Size = new System.Drawing.Size(503, 34);
             this.txtEmail.TabIndex = 1;
             // 
             // label1
@@ -64,7 +64,7 @@
             this.label1.AutoSize = true;
             this.label1.Location = new System.Drawing.Point(17, 15);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(57, 21);
+            this.label1.Size = new System.Drawing.Size(71, 28);
             this.label1.TabIndex = 2;
             this.label1.Text = "E-mail:";
             // 
@@ -73,7 +73,7 @@
             this.label2.AutoSize = true;
             this.label2.Location = new System.Drawing.Point(106, 119);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(56, 21);
+            this.label2.Size = new System.Drawing.Size(69, 28);
             this.label2.TabIndex = 3;
             this.label2.Text = "Senha:";
             // 
@@ -82,7 +82,7 @@
             this.label3.AutoSize = true;
             this.label3.Location = new System.Drawing.Point(33, 154);
             this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(129, 21);
+            this.label3.Size = new System.Drawing.Size(158, 28);
             this.label3.TabIndex = 4;
             this.label3.Text = "Confirmar senha:";
             // 
@@ -90,14 +90,14 @@
             // 
             this.txtConfirm.Location = new System.Drawing.Point(168, 151);
             this.txtConfirm.Name = "txtConfirm";
-            this.txtConfirm.Size = new System.Drawing.Size(415, 29);
+            this.txtConfirm.Size = new System.Drawing.Size(415, 34);
             this.txtConfirm.TabIndex = 5;
             // 
             // txtPassword
             // 
             this.txtPassword.Location = new System.Drawing.Point(168, 116);
             this.txtPassword.Name = "txtPassword";
-            this.txtPassword.Size = new System.Drawing.Size(415, 29);
+            this.txtPassword.Size = new System.Drawing.Size(415, 34);
             this.txtPassword.TabIndex = 6;
             // 
             // label4
@@ -105,7 +105,7 @@
             this.label4.AutoSize = true;
             this.label4.Location = new System.Drawing.Point(17, 50);
             this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(56, 21);
+            this.label4.Size = new System.Drawing.Size(70, 28);
             this.label4.TabIndex = 7;
             this.label4.Text = "Nome:";
             // 
@@ -113,7 +113,7 @@
             // 
             this.txtName.Location = new System.Drawing.Point(80, 47);
             this.txtName.Name = "txtName";
-            this.txtName.Size = new System.Drawing.Size(503, 29);
+            this.txtName.Size = new System.Drawing.Size(503, 34);
             this.txtName.TabIndex = 8;
             // 
             // label5
@@ -121,7 +121,7 @@
             this.label5.AutoSize = true;
             this.label5.Location = new System.Drawing.Point(18, 84);
             this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(133, 21);
+            this.label5.Size = new System.Drawing.Size(166, 28);
             this.label5.TabIndex = 9;
             this.label5.Text = "Nome de usuário:";
             // 
@@ -129,12 +129,12 @@
             // 
             this.txtUsername.Location = new System.Drawing.Point(157, 81);
             this.txtUsername.Name = "txtUsername";
-            this.txtUsername.Size = new System.Drawing.Size(426, 29);
+            this.txtUsername.Size = new System.Drawing.Size(426, 34);
             this.txtUsername.TabIndex = 10;
             // 
             // frmCad
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 21F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(11F, 28F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1200, 694);
             this.Controls.Add(this.txtUsername);
@@ -152,6 +152,7 @@
             this.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.Name = "frmCad";
             this.Text = "frmCad";
+            this.Load += new System.EventHandler(this.frmCad_Load);
             this.ResumeLayout(false);
             this.PerformLayout();
 

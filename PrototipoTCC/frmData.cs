@@ -18,7 +18,7 @@ namespace PrototipoTCC
         {
             CommandeeData commandeedata = new CommandeeData();
             InitializeComponent();
-            if (DAO_Conexao.getConexao(commandeedata.local, commandeedata.banco, commandeedata.user, commandeedata.password))
+            if (DAO_Conexao.getConexao(commandeedata.host, commandeedata.database, commandeedata.username, commandeedata.password))
             {
                 
                 Console.WriteLine("Conectado.");
