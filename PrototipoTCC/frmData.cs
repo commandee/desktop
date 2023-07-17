@@ -66,9 +66,9 @@ namespace PrototipoTCC
             btnMenosPedido.Enabled = false;
             btnPrioridade.Enabled = false;
             btnAlterar.Enabled = false;
-            txtEmail.Text = "nacrai@gmail.com";
+            txtEmail.Text = "wanna@kry.com";
             //txtEmail.Text = "isa@email.com";
-            txtSenha.Text = "aaaaaaaaaaaaaaaaaaaaaaaa";
+            txtSenha.Text = "$2a$10$61KLS.QoBh/EjrpnZ8o1vu.ReCgfpFyn.JoMiGh.se0seRGWcC5D6";
             //txtSenha.Text = "$2a$10$0IgeNIMoENdke2FW3do1ZeFGJEmI..ddOoiqHvCtffwK1JxPnsr5i";
             txtRestaurant.Text = "Augustas";
         }
@@ -259,6 +259,11 @@ namespace PrototipoTCC
             txtEmail.Text = "";
             txtSenha.Text = "";
             txtRestaurant.Text = "";
+        }
+
+        private void grpLogin_Enter(object sender, EventArgs e)
+        {
+
         }
     }
 }
