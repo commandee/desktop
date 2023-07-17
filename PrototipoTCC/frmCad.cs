@@ -52,5 +52,10 @@ namespace PrototipoTCC
             }
             
         }
+
+        private void frmCad_Load(object sender, EventArgs e)
+        {
+
+        }
     }
 }
