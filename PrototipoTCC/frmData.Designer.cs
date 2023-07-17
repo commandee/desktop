@@ -169,6 +169,7 @@
             this.grpLogin.TabIndex = 12;
             this.grpLogin.TabStop = false;
             this.grpLogin.Text = "Login - Commandee";
+            this.grpLogin.Enter += new System.EventHandler(this.grpLogin_Enter);
             // 
             // btnEmployee
             // 
