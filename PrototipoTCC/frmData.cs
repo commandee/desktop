@@ -24,7 +24,7 @@ namespace PrototipoTCC
                 Console.WriteLine("Conectado.");
             } else
             {
-                Application.Restart();
+                Console.WriteLine("Vsf restart");
             }
         }
 
