@@ -1,19 +1,23 @@
 ﻿using MySql.Data.MySqlClient;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
 using System.Linq;
+using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace PrototipoTCC
 {
+
     public partial class frmLogin : Form
     {
-       
+        static readonly HttpClient dpseumemato = new HttpClient();
+
         public frmLogin()
         {
             CommandeeData commandeedata = new CommandeeData();
@@ -28,8 +32,34 @@ namespace PrototipoTCC
             }
         }
 
-        private void btnLogin_Click(object sender, EventArgs e)
+        private async void btnLogin_Click(object sender, EventArgs e)
         {
+            
+
+            HttpResponseMessage response = dpseumemato.GetAsync("http://localhost:3000/user/login").Result;
+
+            var payload = new
+            {
+                email = txtEmail.Text.Trim(),
+                password = txtSenha.Text.Trim()
+            };
+               var json = JsonConvert.SerializeObject(payload);
+
+            StringContent content = new StringContent(json, Encoding.UTF8, "application/json");
+
+            HttpResponseMessage response1 = dpseumemato.PostAsync("http://localhost:3000/user/login", content).Result;
+
+            if (response1.IsSuccessStatusCode)
+            {
+                String respConcent = await response1.Content.ReadAsStringAsync();
+                MessageBox.Show(respConcent);
+            }
+
+
+            
+            
+
+            
             String email = txtEmail.Text.Trim();
             String senha = txtSenha.Text.Trim();
             String restaurantName = txtRestaurant.Text.Trim();
@@ -39,7 +69,7 @@ namespace PrototipoTCC
                 MessageBox.Show("Usuário é um funcionário.", "Alerta do Sistema", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 if (DAO_Conexao.verificaAdmin(email, restaurantName) == true)
                 {
-                    MessageBox.Show("Seja bem vindo!", "Alerta do Sistema", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    //MessageBox.Show("Seja bem vindo!", "Alerta do Sistema", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                     //frmData form2 = new frmData();
                     //form2.Show();
                     this.Size = new Size(1216, 733);
@@ -47,13 +77,13 @@ namespace PrototipoTCC
                 }
                 else
                 {
-                    MessageBox.Show("Você não tem acesso ao restaurante.", "Alerta do Sistema", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    //MessageBox.Show("Você não tem acesso ao restaurante.", "Alerta do Sistema", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                     Console.Write("aaaa");
                 }
             }
             else
             {
-                MessageBox.Show("Usuário/Senha inválida.", "Alerta do Sistema", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                //MessageBox.Show("Usuário/Senha inválida.", "Alerta do Sistema", MessageBoxButtons.OK, MessageBoxIcon.Warning);
             }
 
         }
