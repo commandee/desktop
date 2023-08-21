@@ -12,14 +12,11 @@ namespace PrototipoTCC
         string Name { get; set; }
         string Address { get; set; }
 
-        public string id;
-        public string name;
-
-        public Restaurant(string id, string name)
+        public Restaurant(string id, string name, string address)
         {
-            this.id = id;
-            this.name = name;
+            Id = id;
+            Name = name;
+            Address = address;
         }
-
     }
 }

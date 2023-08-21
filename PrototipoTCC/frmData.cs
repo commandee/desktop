@@ -8,6 +8,7 @@ using System.Drawing;
 using System.Linq;
 using System.Net.Http;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
@@ -16,13 +17,13 @@ namespace PrototipoTCC
 
     public partial class frmLogin : Form
     {
-        static readonly HttpClient dpseumemato = new HttpClient();
+        //static readonly HttpClient dpseumemato = new HttpClient();
 
         public frmLogin()
         {
             CommandeeData commandeedata = new CommandeeData();
             InitializeComponent();
-            if (DAO_Conexao.getConexao(commandeedata.host, commandeedata.database, commandeedata.username, commandeedata.password))
+            if (DAO_Conexao.GetConexao(commandeedata.host, commandeedata.database, commandeedata.username, commandeedata.password))
             {
                 
                 Console.WriteLine("Conectado.");
@@ -32,63 +33,36 @@ namespace PrototipoTCC
             }
         }
 
-        private async void btnLogin_Click(object sender, EventArgs e)
+        private void BtnLogin_Click(object sender, EventArgs e)
         {
-            
-
-            HttpResponseMessage response = dpseumemato.GetAsync("http://localhost:3000/user/login").Result;
-
-            var payload = new
-            {
-                email = txtEmail.Text.Trim(),
-                password = txtSenha.Text.Trim()
-            };
-               var json = JsonConvert.SerializeObject(payload);
-
-            StringContent content = new StringContent(json, Encoding.UTF8, "application/json");
-
-            HttpResponseMessage response1 = dpseumemato.PostAsync("http://localhost:3000/user/login", content).Result;
-
-            if (response1.IsSuccessStatusCode)
-            {
-                String respConcent = await response1.Content.ReadAsStringAsync();
-                MessageBox.Show(respConcent);
-            }
-
-
-            
-            
-
-            
             String email = txtEmail.Text.Trim();
             String senha = txtSenha.Text.Trim();
             String restaurantName = txtRestaurant.Text.Trim();
 
-            if (DAO_Conexao.login(email, senha) == true)
+            if (DAO_Conexao.Login(email, senha) == true)
             {
                 MessageBox.Show("Usuário é um funcionário.", "Alerta do Sistema", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                if (DAO_Conexao.verificaAdmin(email, restaurantName) == true)
+                if (DAO_Conexao.VerificaAdmin(email, restaurantName) == true)
                 {
-                    //MessageBox.Show("Seja bem vindo!", "Alerta do Sistema", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                    //frmData form2 = new frmData();
-                    //form2.Show();
+                    MessageBox.Show("Seja bem vindo!", "Alerta do Sistema", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    frmLogin form2 = new frmLogin();
+                    form2.Show();
                     this.Size = new Size(1216, 733);
                     grpLogin.Visible = false;   
                 }
                 else
                 {
-                    //MessageBox.Show("Você não tem acesso ao restaurante.", "Alerta do Sistema", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                    Console.Write("aaaa");
+                   MessageBox.Show("Você não tem acesso ao restaurante.", "Alerta do Sistema", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 }
             }
             else
             {
-                //MessageBox.Show("Usuário/Senha inválida.", "Alerta do Sistema", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                MessageBox.Show("Usuário/Senha inválida.", "Alerta do Sistema", MessageBoxButtons.OK, MessageBoxIcon.Warning);
             }
 
         }
 
-        private void frmLogin_Load(object sender, EventArgs e)
+        private void FrmLogin_Load(object sender, EventArgs e)
         {
             this.Size = new Size(1216, 230);
             dgPedidos.Enabled = false;
@@ -103,7 +77,7 @@ namespace PrototipoTCC
             txtRestaurant.Text = "Augustas";
         }
 
-        private void btnTotal_Click(object sender, EventArgs e)
+        private void BtnTotal_Click(object sender, EventArgs e)
         {
             btnMaisPedido.Enabled = true;
             btnMenosPedido.Enabled = true;
@@ -117,7 +91,7 @@ namespace PrototipoTCC
                 }
                 dgPedidos.ClearSelection();
                 DAO_Conexao.con.Open();
-                string sql = "SELECT id, quantity, createdAt, itemId, commandId, priority FROM `Order`";
+                string sql = "SELECT id, commanda_id, quantity, item_id, , priority FROM `Order`";
                 MySqlCommand command = new MySqlCommand(sql, DAO_Conexao.con);
                 MySqlDataAdapter adapter = new MySqlDataAdapter(command);
                 DataTable dt = new DataTable();
@@ -138,7 +112,7 @@ namespace PrototipoTCC
             }
         }
 
-        private void btnMaisPedido_Click(object sender, EventArgs e)
+        private void BtnMaisPedido_Click(object sender, EventArgs e)
         {
             btnMaisPedido.Enabled = true;
             btnMenosPedido.Enabled = true;
@@ -153,9 +127,9 @@ namespace PrototipoTCC
                 dgPedidos.ClearSelection();
                 DAO_Conexao.con.Open();
 
-                string sql = "SELECT itemId, COUNT(itemId) AS Frequency " +
+                string sql = "SELECT item_id, COUNT(item_id) AS Frequency " +
                              "FROM `Order` " +
-                             "GROUP BY itemId " +
+                             "GROUP BY item_id " +
                              "ORDER BY Frequency DESC " +
                              "LIMIT 1";
 
@@ -164,14 +138,14 @@ namespace PrototipoTCC
 
                 if (dr.Read())
                 {
-                    string itemFrequente = dr.GetString("itemId");
+                    string itemFrequente = dr.GetString("item_id");
 
                     dgPedidos.ClearSelection();
 
                     foreach (DataGridViewRow row in dgPedidos.Rows)
                     {
 
-                        if (row.Cells["itemId"].Value != null && row.Cells["itemId"].Value.ToString() == itemFrequente)
+                        if (row.Cells["item_id"].Value != null && row.Cells["item_id"].Value.ToString() == itemFrequente)
                         {
                             row.Selected = true;
                         }
@@ -188,7 +162,7 @@ namespace PrototipoTCC
             }
         }
 
-        private void btnPrioridade_Click(object sender, EventArgs e)
+        private void BtnPrioridade_Click(object sender, EventArgs e)
         {
             btnMaisPedido.Enabled = true;
             btnMenosPedido.Enabled = true;
@@ -202,7 +176,7 @@ namespace PrototipoTCC
                 }
                 dgPedidos.ClearSelection();
                 DAO_Conexao.con.Open();
-                string sql = "SELECT id, quantity, createdAt, itemId, commandId, priority FROM `Order`";
+                string sql = "SELECT public_id, quantity, priority, status, notes FROM `order`";
                 MySqlCommand prio = new MySqlCommand(sql, DAO_Conexao.con);
                 MySqlDataReader dr = prio.ExecuteReader();
                 if (dr.Read())
@@ -227,7 +201,7 @@ namespace PrototipoTCC
             }
         }
 
-        private void btnMenosPedido_Click(object sender, EventArgs e)
+        private void BtnMenosPedido_Click(object sender, EventArgs e)
         {
             btnMaisPedido.Enabled = true;
             btnMenosPedido.Enabled = true;
@@ -242,9 +216,9 @@ namespace PrototipoTCC
                 dgPedidos.ClearSelection();
                 DAO_Conexao.con.Open();
 
-                string sql = "SELECT itemId, COUNT(itemId) AS Frequency " +
+                string sql = "SELECT item_id, COUNT(item_id) AS Frequency " +
                              "FROM `Order` " +
-                             "GROUP BY itemId " +
+                             "GROUP BY item_id " +
                              "ORDER BY Frequency ASC " +
                              "LIMIT 1";
 
@@ -253,13 +227,13 @@ namespace PrototipoTCC
 
                 if (dr.Read())
                 {
-                    string itemMenosFrequente = dr.GetString("itemId");
+                    string itemMenosFrequente = dr.GetString("item_id");
 
                     dgPedidos.ClearSelection();
 
                     foreach (DataGridViewRow row in dgPedidos.Rows)
                     {
-                        if (row.Cells["itemId"].Value != null && row.Cells["itemId"].Value.ToString() == itemMenosFrequente)
+                        if (row.Cells["item_id"].Value != null && row.Cells["item_id"].Value.ToString() == itemMenosFrequente)
                         {
                             row.Selected = true;
                         }

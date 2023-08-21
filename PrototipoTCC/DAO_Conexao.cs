@@ -1,6 +1,7 @@
 ﻿using MySql.Data.MySqlClient;
 using System;
 using System.Data;
+using System.Security.Permissions;
 using System.Windows.Forms;
 
 namespace PrototipoTCC
@@ -9,7 +10,7 @@ namespace PrototipoTCC
     {
         public static MySqlConnection con;
 
-        public static bool getConexao(string local, string banco, string user, string senha)
+        public static bool GetConexao(string local, string banco, string user, string senha)
         {
             try
             {
@@ -25,7 +26,30 @@ namespace PrototipoTCC
             }
         }
 
-        public static bool login(string email, string senha)
+        public static void ExNonQueer(string sql)
+        {
+            try
+            {
+                if (con.State == ConnectionState.Closed)
+                {
+                    con.Open();
+
+                }
+                MySqlCommand command = new MySqlCommand(sql, con);
+                command.ExecuteNonQuery();
+                con.Close();
+            } catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+            } finally
+            {
+                con.Close();
+            }
+            
+
+        }
+
+        public static bool Login(string email, string senha)
         {
             try
             {
@@ -35,7 +59,7 @@ namespace PrototipoTCC
                 }   
 
                 con.Open();
-                string sql = $"SELECT * FROM Employee WHERE email='{email}' AND password='{senha}'";
+                string sql = $"SELECT * FROM employee WHERE email='{email}' AND password='{senha}'";
                 MySqlCommand login = new MySqlCommand(sql, con);
                 Console.WriteLine(sql);
                 MySqlDataReader result = login.ExecuteReader();
@@ -54,7 +78,7 @@ namespace PrototipoTCC
             }
         }
 
-        public static bool verificaAdmin(string email, string name)
+        public static bool VerificaAdmin(string email, string name)
         {
             string id = "";
             bool admin = false;
@@ -66,7 +90,7 @@ namespace PrototipoTCC
                     con.Open();
                 }
 
-                string sql = $"SELECT id FROM Employee WHERE email='{email}'";
+                string sql = $"SELECT id FROM employee WHERE email='{email}'";
                 MySqlCommand posicao = new MySqlCommand(sql, con);
                 MySqlDataReader dr = posicao.ExecuteReader();
                 if (dr.Read())
@@ -77,13 +101,15 @@ namespace PrototipoTCC
                 dr.Close();
 
                 string idRes = "";
-                string sql2 = $"SELECT id FROM Restaurant WHERE name='{name}'";
+                string publicId = "";
+                string sql2 = $"SELECT id, public_id FROM restaurant WHERE name='{name}'";
                 MySqlCommand restaurantCmd = new MySqlCommand(sql2, con);
 
                 MySqlDataReader restaurantDr = restaurantCmd.ExecuteReader();
                 if (restaurantDr.Read())
                 {
                     idRes = Convert.ToString(restaurantDr["id"]);
+                    publicId = Convert.ToString(restaurantDr["public_id"]);
                 }
                 restaurantDr.Close();
 
@@ -117,7 +143,7 @@ namespace PrototipoTCC
                     con.Open();
                 }
 
-                string sql = $"SELECT * FROM _ownership WHERE A='{id}' AND B='{idRes}'";
+                string sql = $"SELECT * FROM ownership WHERE owner_id='{id}' AND restaurant_id='{idRes}'";
                 MySqlCommand verifica = new MySqlCommand(sql, con);
 
                 MySqlDataReader drVer = verifica.ExecuteReader();

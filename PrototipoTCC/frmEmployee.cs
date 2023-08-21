@@ -5,6 +5,7 @@ using System.ComponentModel;
 using System.Data;
 using System.Drawing;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
@@ -19,6 +20,8 @@ namespace PrototipoTCC
         }
         bool consulta = false;
         bool delete = false;
+
+
         public void updateTable()
         {
 
@@ -30,7 +33,7 @@ namespace PrototipoTCC
                 }
                 dgvEmployee.ClearSelection();
                 DAO_Conexao.con.Open();
-                string sql = "SELECT email, name, createdAt, updatedAt, username FROM `Employee`";
+                string sql = "SELECT employee.username, employee.email, employee.public_id as id FROM employement INNER JOIN employee ON employee.id = employement.employee_id INNER JOIN restaurant ON restaurant.id = employement.restaurant_id WHERE restaurant.public_id = 'aaaaaaaaaaaaaaaa' LIMIT 0, 1000";
                 MySqlCommand command = new MySqlCommand(sql, DAO_Conexao.con);
                 MySqlDataAdapter adapter = new MySqlDataAdapter(command);
                 DataTable dt = new DataTable();
@@ -159,7 +162,7 @@ namespace PrototipoTCC
                                     DAO_Conexao.con.Close();
                                 }
                                 DAO_Conexao.con.Open();
-                                string sql = "DELETE FROM `Employee` WHERE `email` = '" + emailToSelect + "'";
+                                string sql = "DELETE FROM `employee` WHERE `email` = '" + emailToSelect + "'";
                                 MySqlCommand command = new MySqlCommand(sql, DAO_Conexao.con);
                                 command.ExecuteNonQuery();
                                 updateTable();

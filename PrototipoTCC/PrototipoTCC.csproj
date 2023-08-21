@@ -42,6 +42,11 @@
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Linq, Version=4.1.1.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Linq.4.3.0\lib\net463\System.Linq.dll</HintPath>
+      <Private>True</Private>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -55,6 +60,7 @@
   <ItemGroup>
     <Compile Include="CommandeeData.cs" />
     <Compile Include="DAO_Conexao.cs" />
+    <Compile Include="EmpController.cs" />
     <Compile Include="Employee.cs" />
     <Compile Include="frmCad.cs">
       <SubType>Form</SubType>
@@ -78,6 +84,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Queries.cs" />
     <Compile Include="Restaurant.cs" />
+    <Compile Include="RestaurantController.cs" />
     <EmbeddedResource Include="frmCad.resx">
       <DependentUpon>frmCad.cs</DependentUpon>
     </EmbeddedResource>

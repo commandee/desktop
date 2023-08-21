@@ -22,7 +22,6 @@ namespace PrototipoTCC
         {
             
             string email = txtEmail.Text.Trim();
-            string name = txtName.Text.Trim();
             string username = txtUsername.Text.Trim();
             string password = txtPassword.Text.Trim();
             string passwordConfirm = txtConfirm.Text.Trim();
@@ -34,11 +33,7 @@ namespace PrototipoTCC
                     {
                         DAO_Conexao.con.Close();
                     }
-                    DAO_Conexao.con.Open();
-                    string sql = "INSERT INTO `Employee` (`email`, `name`, `username`, `password`) VALUES ('" + email + "', '" + name + "', '" + username + "', '" + password + "')";
-                    MySqlCommand command = new MySqlCommand(sql, DAO_Conexao.con);
-                    command.ExecuteNonQuery();
-                    DAO_Conexao.con.Close();
+                    
                 } catch (Exception ex)
                 {
                     Console.WriteLine(ex.Message);

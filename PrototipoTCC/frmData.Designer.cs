@@ -56,7 +56,7 @@
             this.btnLogin.TabIndex = 0;
             this.btnLogin.Text = "Cadastrar";
             this.btnLogin.UseVisualStyleBackColor = true;
-            this.btnLogin.Click += new System.EventHandler(this.btnLogin_Click);
+            this.btnLogin.Click += new System.EventHandler(this.BtnLogin_Click);
             // 
             // txtEmail
             // 
@@ -122,7 +122,7 @@
             this.btnTotal.TabIndex = 8;
             this.btnTotal.Text = "Total de pedidos";
             this.btnTotal.UseVisualStyleBackColor = true;
-            this.btnTotal.Click += new System.EventHandler(this.btnTotal_Click);
+            this.btnTotal.Click += new System.EventHandler(this.BtnTotal_Click);
             // 
             // btnMaisPedido
             // 
@@ -132,7 +132,7 @@
             this.btnMaisPedido.TabIndex = 9;
             this.btnMaisPedido.Text = "Item mais pedido";
             this.btnMaisPedido.UseVisualStyleBackColor = true;
-            this.btnMaisPedido.Click += new System.EventHandler(this.btnMaisPedido_Click);
+            this.btnMaisPedido.Click += new System.EventHandler(this.BtnMaisPedido_Click);
             // 
             // btnPrioridade
             // 
@@ -142,7 +142,7 @@
             this.btnPrioridade.TabIndex = 10;
             this.btnPrioridade.Text = "Item com mais prioridade";
             this.btnPrioridade.UseVisualStyleBackColor = true;
-            this.btnPrioridade.Click += new System.EventHandler(this.btnPrioridade_Click);
+            this.btnPrioridade.Click += new System.EventHandler(this.BtnPrioridade_Click);
             // 
             // btnMenosPedido
             // 
@@ -152,7 +152,7 @@
             this.btnMenosPedido.TabIndex = 11;
             this.btnMenosPedido.Text = "Item menos pedido";
             this.btnMenosPedido.UseVisualStyleBackColor = true;
-            this.btnMenosPedido.Click += new System.EventHandler(this.btnMenosPedido_Click);
+            this.btnMenosPedido.Click += new System.EventHandler(this.BtnMenosPedido_Click);
             // 
             // grpLogin
             // 
@@ -208,7 +208,7 @@
             this.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.Name = "frmLogin";
             this.Text = "Form1";
-            this.Load += new System.EventHandler(this.frmLogin_Load);
+            this.Load += new System.EventHandler(this.FrmLogin_Load);
             ((System.ComponentModel.ISupportInitialize)(this.dgPedidos)).EndInit();
             this.grpLogin.ResumeLayout(false);
             this.grpLogin.PerformLayout();
