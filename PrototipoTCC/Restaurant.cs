@@ -8,9 +8,9 @@ namespace PrototipoTCC
 {
     public class Restaurant
     {
-        string Id { get; set; }
-        string Name { get; set; }
-        string Address { get; set; }
+        public string Id { get; set; }
+        public string Name { get; set; }
+        public string Address { get; set; }
 
         public Restaurant(string id, string name, string address)
         {

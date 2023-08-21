@@ -34,7 +34,6 @@
             this.label1 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
-            this.txtRestaurant = new System.Windows.Forms.TextBox();
             this.dgPedidos = new System.Windows.Forms.DataGridView();
             this.btnTotal = new System.Windows.Forms.Button();
             this.btnMaisPedido = new System.Windows.Forms.Button();
@@ -43,6 +42,8 @@
             this.grpLogin = new System.Windows.Forms.GroupBox();
             this.btnEmployee = new System.Windows.Forms.Button();
             this.btnAlterar = new System.Windows.Forms.Button();
+            this.cmbRestaurante = new System.Windows.Forms.ComboBox();
+            this.btnPesquisar = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.dgPedidos)).BeginInit();
             this.grpLogin.SuspendLayout();
             this.SuspendLayout();
@@ -54,7 +55,7 @@
             this.btnLogin.Name = "btnLogin";
             this.btnLogin.Size = new System.Drawing.Size(100, 37);
             this.btnLogin.TabIndex = 0;
-            this.btnLogin.Text = "Cadastrar";
+            this.btnLogin.Text = "Login";
             this.btnLogin.UseVisualStyleBackColor = true;
             this.btnLogin.Click += new System.EventHandler(this.BtnLogin_Click);
             // 
@@ -93,18 +94,11 @@
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(499, 25);
+            this.label3.Location = new System.Drawing.Point(564, 25);
             this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(161, 21);
+            this.label3.Size = new System.Drawing.Size(96, 21);
             this.label3.TabIndex = 5;
-            this.label3.Text = "Nome do restaurante:";
-            // 
-            // txtRestaurant
-            // 
-            this.txtRestaurant.Location = new System.Drawing.Point(666, 22);
-            this.txtRestaurant.Name = "txtRestaurant";
-            this.txtRestaurant.Size = new System.Drawing.Size(498, 29);
-            this.txtRestaurant.TabIndex = 6;
+            this.label3.Text = "Restaurante:";
             // 
             // dgPedidos
             // 
@@ -156,10 +150,11 @@
             // 
             // grpLogin
             // 
+            this.grpLogin.Controls.Add(this.btnPesquisar);
+            this.grpLogin.Controls.Add(this.cmbRestaurante);
             this.grpLogin.Controls.Add(this.label1);
             this.grpLogin.Controls.Add(this.txtEmail);
             this.grpLogin.Controls.Add(this.label3);
-            this.grpLogin.Controls.Add(this.txtRestaurant);
             this.grpLogin.Controls.Add(this.label2);
             this.grpLogin.Controls.Add(this.txtSenha);
             this.grpLogin.Controls.Add(this.btnLogin);
@@ -190,6 +185,30 @@
             this.btnAlterar.Text = "Alterar usuário";
             this.btnAlterar.UseVisualStyleBackColor = true;
             this.btnAlterar.Click += new System.EventHandler(this.btnAlterar_Click);
+            // 
+            // cmbRestaurante
+            // 
+            this.cmbRestaurante.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.SuggestAppend;
+            this.cmbRestaurante.DisplayMember = "Name";
+            this.cmbRestaurante.Enabled = false;
+            this.cmbRestaurante.FormattingEnabled = true;
+            this.cmbRestaurante.Location = new System.Drawing.Point(666, 22);
+            this.cmbRestaurante.Name = "cmbRestaurante";
+            this.cmbRestaurante.Size = new System.Drawing.Size(504, 29);
+            this.cmbRestaurante.TabIndex = 6;
+            this.cmbRestaurante.SelectedIndexChanged += new System.EventHandler(this.cmbRestaurante_SelectedIndexChanged);
+            // 
+            // btnPesquisar
+            // 
+            this.btnPesquisar.Location = new System.Drawing.Point(666, 56);
+            this.btnPesquisar.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.btnPesquisar.Name = "btnPesquisar";
+            this.btnPesquisar.Size = new System.Drawing.Size(100, 37);
+            this.btnPesquisar.TabIndex = 7;
+            this.btnPesquisar.Text = "Pesquisar";
+            this.btnPesquisar.UseVisualStyleBackColor = true;
+            this.btnPesquisar.Visible = false;
+            this.btnPesquisar.Click += new System.EventHandler(this.BtnPesquisar_Click);
             // 
             // frmLogin
             // 
@@ -224,7 +243,6 @@
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label label3;
-        private System.Windows.Forms.TextBox txtRestaurant;
         private System.Windows.Forms.DataGridView dgPedidos;
         private System.Windows.Forms.Button btnTotal;
         private System.Windows.Forms.Button btnMaisPedido;
@@ -233,6 +251,8 @@
         private System.Windows.Forms.GroupBox grpLogin;
         private System.Windows.Forms.Button btnEmployee;
         private System.Windows.Forms.Button btnAlterar;
+        private System.Windows.Forms.ComboBox cmbRestaurante;
+        private System.Windows.Forms.Button btnPesquisar;
     }
 }
 

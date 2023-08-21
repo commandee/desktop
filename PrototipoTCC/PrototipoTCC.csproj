@@ -59,6 +59,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="CommandeeData.cs" />
+    <Compile Include="Controllers.cs" />
     <Compile Include="DAO_Conexao.cs" />
     <Compile Include="EmpController.cs" />
     <Compile Include="Employee.cs" />

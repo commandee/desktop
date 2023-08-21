@@ -126,18 +126,27 @@ namespace PrototipoTCC
 
         public Employee Login(string email, string senha)
         {
-            DAO_Conexao.con.Open();
+            if (DAO_Conexao.con.State == System.Data.ConnectionState.Closed)
+            {
+                DAO_Conexao.con.Open();
+            }
+     
             string sql = @"SELECT public_id as id, email, username, password FROM employee
                            WHERE employee.email = @email
                            LIMIT 1";
             MySqlCommand command = new MySqlCommand(sql, DAO_Conexao.con);
             command.Parameters.AddWithValue("@email", email);
             MySqlDataReader reader = command.ExecuteReader();
-             if (reader.Read()) { 
+
+            if (reader.Read()) { 
                 string senhaDB = reader.GetString("password");
                 if (senha == senhaDB)                
                 {
-                    return new Employee(reader.GetString("id"), reader.GetString("username"), reader.GetString("email"));    
+                    var employee = new Employee(reader.GetString("id"), reader.GetString("username"), reader.GetString("email"));
+                    DAO_Conexao.con.Close();
+                    return employee;
+                    //return new Employee(reader.GetString("id"), reader.GetString("username"), reader.GetString("email")); 
+                    
                 } else
                 {
                     throw new Exception("Senha incorreta.");
@@ -146,6 +155,7 @@ namespace PrototipoTCC
             {
                 throw new Exception("Usuário não encontrado.");
             }
+            
         }
     }
 }

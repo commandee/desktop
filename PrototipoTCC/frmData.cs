@@ -17,13 +17,15 @@ namespace PrototipoTCC
 
     public partial class frmLogin : Form
     {
+
         //static readonly HttpClient dpseumemato = new HttpClient();
 
         public frmLogin()
         {
             CommandeeData commandeedata = new CommandeeData();
             InitializeComponent();
-            if (DAO_Conexao.GetConexao(commandeedata.host, commandeedata.database, commandeedata.username, commandeedata.password))
+            DAO_Conexao.GetConexao(commandeedata.host, commandeedata.database, commandeedata.username, commandeedata.password);
+            if (DAO_Conexao.con.Ping())
             {
                 
                 Console.WriteLine("Conectado.");
@@ -31,34 +33,26 @@ namespace PrototipoTCC
             {
                 Console.WriteLine("Vsf restart");
             }
+            DAO_Conexao.con.Close();
         }
 
         private void BtnLogin_Click(object sender, EventArgs e)
         {
-            String email = txtEmail.Text.Trim();
-            String senha = txtSenha.Text.Trim();
-            String restaurantName = txtRestaurant.Text.Trim();
-
-            if (DAO_Conexao.Login(email, senha) == true)
-            {
-                MessageBox.Show("Usuário é um funcionário.", "Alerta do Sistema", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                if (DAO_Conexao.VerificaAdmin(email, restaurantName) == true)
+            string email = txtEmail.Text;
+            string password = txtSenha.Text;
+                try
                 {
-                    MessageBox.Show("Seja bem vindo!", "Alerta do Sistema", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                    frmLogin form2 = new frmLogin();
-                    form2.Show();
-                    this.Size = new Size(1216, 733);
-                    grpLogin.Visible = false;   
+                    var employee = Controllers.empController.Login(email, password);
+                    cmbRestaurante.DataSource = Controllers.empController.Owns(employee);
+                    cmbRestaurante.Enabled = true;
+                    btnPesquisar.Visible = true;
                 }
-                else
+                catch (Exception ex)
                 {
-                   MessageBox.Show("Você não tem acesso ao restaurante.", "Alerta do Sistema", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                }
-            }
-            else
-            {
-                MessageBox.Show("Usuário/Senha inválida.", "Alerta do Sistema", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-            }
+                    MessageBox.Show(ex.Message, "Alerta do Sistema", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }       
+           
+            
 
         }
 
@@ -70,11 +64,10 @@ namespace PrototipoTCC
             btnMenosPedido.Enabled = false;
             btnPrioridade.Enabled = false;
             btnAlterar.Enabled = false;
-            txtEmail.Text = "wanna@kry.com";
+            txtEmail.Text = "ame.pistache@gmail.com";
             //txtEmail.Text = "isa@email.com";
-            txtSenha.Text = "$2a$10$61KLS.QoBh/EjrpnZ8o1vu.ReCgfpFyn.JoMiGh.se0seRGWcC5D6";
+            txtSenha.Text = "$2a$10$dDF5aoRIk62EuzL75Dxn5u/2eWv9e.UDK5PHeWXpEAAAjABrOciRK";
             //txtSenha.Text = "$2a$10$0IgeNIMoENdke2FW3do1ZeFGJEmI..ddOoiqHvCtffwK1JxPnsr5i";
-            txtRestaurant.Text = "Augustas";
         }
 
         private void BtnTotal_Click(object sender, EventArgs e)
@@ -262,12 +255,25 @@ namespace PrototipoTCC
             grpLogin.Visible = true;
             txtEmail.Text = "";
             txtSenha.Text = "";
-            txtRestaurant.Text = "";
-        }
+            cmbRestaurante.DataSource = null;
+            cmbRestaurante.DisplayMember = "Name";
+            btnPesquisar.Visible = false;
+            cmbRestaurante.Enabled = false;
+            }
 
         private void grpLogin_Enter(object sender, EventArgs e)
         {
 
+        }
+
+        private void cmbRestaurante_SelectedIndexChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void BtnPesquisar_Click(object sender, EventArgs e)
+        {
+            this.Size = new Size(1216, 733);
         }
     }
 }
