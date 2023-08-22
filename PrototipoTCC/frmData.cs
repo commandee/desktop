@@ -84,7 +84,7 @@ namespace PrototipoTCC
                 }
                 dgPedidos.ClearSelection();
                 DAO_Conexao.con.Open();
-                string sql = "SELECT id, commanda_id, quantity, item_id, , priority FROM `Order`";
+                string sql = "SELECT id, commanda_id, quantity, item_id, , priority FROM `order`";
                 MySqlCommand command = new MySqlCommand(sql, DAO_Conexao.con);
                 MySqlDataAdapter adapter = new MySqlDataAdapter(command);
                 DataTable dt = new DataTable();
@@ -121,7 +121,7 @@ namespace PrototipoTCC
                 DAO_Conexao.con.Open();
 
                 string sql = "SELECT item_id, COUNT(item_id) AS Frequency " +
-                             "FROM `Order` " +
+                             "FROM `order` " +
                              "GROUP BY item_id " +
                              "ORDER BY Frequency DESC " +
                              "LIMIT 1";
@@ -210,7 +210,7 @@ namespace PrototipoTCC
                 DAO_Conexao.con.Open();
 
                 string sql = "SELECT item_id, COUNT(item_id) AS Frequency " +
-                             "FROM `Order` " +
+                             "FROM `order` " +
                              "GROUP BY item_id " +
                              "ORDER BY Frequency ASC " +
                              "LIMIT 1";
