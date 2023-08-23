@@ -19,13 +19,9 @@ namespace PrototipoTCC
         Employee Login(string email, string senha);
 
         IEnumerable<Employee> GetAll();
-
         IEnumerable<Restaurant> WorksAt(Employee employee);
 
         IEnumerable<Restaurant> Owns(Employee employee);
-
-
-
     }
     internal class EmpController : IEmpController
     {
