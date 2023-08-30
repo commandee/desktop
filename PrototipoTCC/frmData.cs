@@ -84,7 +84,7 @@ namespace PrototipoTCC
                 }
                 dgPedidos.ClearSelection();
                 DAO_Conexao.con.Open();
-                string sql = "SELECT id, commanda_id, quantity, item_id, , priority FROM `order`";
+                string sql = "SELECT commanda_id, item_id, quantity, priority, status FROM `order`";
                 MySqlCommand command = new MySqlCommand(sql, DAO_Conexao.con);
                 MySqlDataAdapter adapter = new MySqlDataAdapter(command);
                 DataTable dt = new DataTable();
@@ -113,41 +113,31 @@ namespace PrototipoTCC
             btnAlterar.Enabled = true;
             try
             {
-                if (DAO_Conexao.con.State == ConnectionState.Open)
+                using (var con = DAO_Conexao.con)
                 {
-                    DAO_Conexao.con.Close();
-                }
-                dgPedidos.ClearSelection();
-                DAO_Conexao.con.Open();
-
-                string sql = "SELECT item_id, COUNT(item_id) AS Frequency " +
-                             "FROM `order` " +
-                             "GROUP BY item_id " +
-                             "ORDER BY Frequency DESC " +
-                             "LIMIT 1";
-
-                MySqlCommand command = new MySqlCommand(sql, DAO_Conexao.con);
-                MySqlDataReader dr = command.ExecuteReader();
-
-                if (dr.Read())
-                {
-                    string itemFrequente = dr.GetString("item_id");
-
                     dgPedidos.ClearSelection();
 
-                    foreach (DataGridViewRow row in dgPedidos.Rows)
+                    string sql = @"SELECT * FROM order
+                                   INNER JOIN item on item.id = order.item_id
+                                   INNER JOIN restaurant on restaurant.id = order.restaurant_id";
+
+                    var command = new MySqlCommand(sql, con);
+
+                    using (var dr = command.ExecuteReader())
                     {
-
-                        if (row.Cells["item_id"].Value != null && row.Cells["item_id"].Value.ToString() == itemFrequente)
+                        if (dr.Read())
                         {
-                            row.Selected = true;
-                        }
+                            string itemFrequente = dr.GetString("item_id");
 
+                            dgPedidos.ClearSelection();
+
+                            foreach (DataGridViewRow row in dgPedidos.Rows)
+                                if (row.Cells["item_id"].Value != null && row.Cells["item_id"].Value.ToString() == itemFrequente)
+                                    row.Selected = true;
+                        }
                     }
                 }
 
-                dr.Close();
-                DAO_Conexao.con.Close();
             }
             catch (Exception ex)
             {
@@ -169,7 +159,7 @@ namespace PrototipoTCC
                 }
                 dgPedidos.ClearSelection();
                 DAO_Conexao.con.Open();
-                string sql = "SELECT public_id, quantity, priority, status, notes FROM `order`";
+                string sql = "SELECT public_id, quantity, priority, status, notes FROM order";
                 MySqlCommand prio = new MySqlCommand(sql, DAO_Conexao.con);
                 MySqlDataReader dr = prio.ExecuteReader();
                 if (dr.Read())
@@ -210,7 +200,7 @@ namespace PrototipoTCC
                 DAO_Conexao.con.Open();
 
                 string sql = "SELECT item_id, COUNT(item_id) AS Frequency " +
-                             "FROM `order` " +
+                             "FROM order" +
                              "GROUP BY item_id " +
                              "ORDER BY Frequency ASC " +
                              "LIMIT 1";
@@ -273,6 +263,7 @@ namespace PrototipoTCC
 
         private void BtnPesquisar_Click(object sender, EventArgs e)
         {
+
             this.Size = new Size(1216, 733);
         }
     }

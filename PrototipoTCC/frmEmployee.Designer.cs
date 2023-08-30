@@ -45,9 +45,11 @@
             this.dgvEmployee.Location = new System.Drawing.Point(334, 55);
             this.dgvEmployee.Name = "dgvEmployee";
             this.dgvEmployee.ReadOnly = true;
+            this.dgvEmployee.RowHeadersWidth = 51;
             this.dgvEmployee.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.dgvEmployee.Size = new System.Drawing.Size(854, 627);
             this.dgvEmployee.TabIndex = 0;
+            this.dgvEmployee.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvEmployee_CellContentClick);
             // 
             // btnCons
             // 
@@ -83,7 +85,7 @@
             // 
             this.txtSpec.Location = new System.Drawing.Point(12, 141);
             this.txtSpec.Name = "txtSpec";
-            this.txtSpec.Size = new System.Drawing.Size(316, 29);
+            this.txtSpec.Size = new System.Drawing.Size(316, 34);
             this.txtSpec.TabIndex = 5;
             this.txtSpec.TextChanged += new System.EventHandler(this.txtSpec_TextChanged);
             this.txtSpec.Enter += new System.EventHandler(this.txtConsulta_Enter);
@@ -102,7 +104,7 @@
             // 
             this.txtBusca.Location = new System.Drawing.Point(12, 219);
             this.txtBusca.Name = "txtBusca";
-            this.txtBusca.Size = new System.Drawing.Size(316, 29);
+            this.txtBusca.Size = new System.Drawing.Size(316, 34);
             this.txtBusca.TabIndex = 7;
             this.txtBusca.Enter += new System.EventHandler(this.txtBusca_Enter);
             // 
@@ -118,7 +120,7 @@
             // 
             // frmEmployee
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 21F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(11F, 28F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1200, 694);
             this.Controls.Add(this.btnBusca);

@@ -33,7 +33,7 @@ namespace PrototipoTCC
                 }
                 dgvEmployee.ClearSelection();
                 DAO_Conexao.con.Open();
-                string sql = "SELECT employee.username, employee.email, employee.public_id as id FROM employement INNER JOIN employee ON employee.id = employement.employee_id INNER JOIN restaurant ON restaurant.id = employement.restaurant_id WHERE restaurant.public_id = 'aaaaaaaaaaaaaaaa' LIMIT 0, 1000";
+                string sql = $"SELECT employee.username, employee.email, employee.public_id as id FROM employment INNER JOIN employee ON employee.id = employment.employee_id INNER JOIN restaurant ON restaurant.id = employment.restaurant_id LIMIT 0, 1000";
                 MySqlCommand command = new MySqlCommand(sql, DAO_Conexao.con);
                 MySqlDataAdapter adapter = new MySqlDataAdapter(command);
                 DataTable dt = new DataTable();
@@ -213,6 +213,11 @@ namespace PrototipoTCC
             btnConfirma.Visible = false;
             txtBusca.Text = "";
             txtBusca.ForeColor = Color.Black;
+        }
+
+        private void dgvEmployee_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        {
+
         }
     }
 }

@@ -31,7 +31,8 @@ namespace PrototipoTCC
 
         public void Login(Employee employee, string restName)
         {
-            DAO_Conexao.con.Open();
+            if (DAO_Conexao.con.State == System.Data.ConnectionState.Closed)
+                DAO_Conexao.con.Open();
             string sql = @"SELECT restaurant.public_id as id, restaurant.name, restaurant.address
                            FROM ownership
                            INNER JOIN restaurant on restaurant.id = ownership.restaurant_id
