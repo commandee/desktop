@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Forms;
 using static System.Windows.Forms.VisualStyles.VisualStyleElement.ListView;
 using static System.Windows.Forms.VisualStyles.VisualStyleElement.StartPanel;
 
@@ -29,6 +30,8 @@ namespace PrototipoTCC
         {
             var con = DAO_Conexao.con;
 
+            con.Open();
+
             var sql = @"INSERT INTO `employee` (`email`,`username`, `password`) 
                            VALUES (@email,@username,@password)";
             var command = new MySqlCommand(sql, con);
@@ -36,12 +39,16 @@ namespace PrototipoTCC
             command.Parameters.AddWithValue("@username", username);
             command.Parameters.AddWithValue("@password", password);
             command.ExecuteNonQuery();
-            
+
+            con.Close();
         }
 
         public IEnumerable<Restaurant> WorksAt(Employee employee)
         {
             var con = DAO_Conexao.con;
+
+            con.Open();
+
             var sql = @"SELECT restaurant.public_id as id, restaurant.name, restaurant.address
                            FROM employment
                            INNER JOIN restaurant on restaurant.id = employment.restaurant_id
@@ -58,16 +65,19 @@ namespace PrototipoTCC
                     restaurants.Add(restaurant);
 
                 }
+                con.Close();
                 return restaurants;
             }
-            
         }
-
-        
 
         public IEnumerable<Restaurant> Owns(Employee employee)
         {
             var con = DAO_Conexao.con;
+            if(con.State == System.Data.ConnectionState.Open)
+            {
+                con.Close();
+            }
+            con.Open();
             var sql = @"SELECT restaurant.public_id as id, restaurant.name, restaurant.address
                            FROM ownership
                            INNER JOIN restaurant on restaurant.id = ownership.restaurant_id
@@ -83,6 +93,8 @@ namespace PrototipoTCC
                 restaurants.Add(restaurant);
 
             }
+
+            con.Close();
             return restaurants;
         }
         
@@ -114,6 +126,9 @@ namespace PrototipoTCC
         public bool IsAdmin(Employee employee)
         {
             var con = DAO_Conexao.con;
+
+            con.Open();
+
             var sql = @"SELECT employee.public_id as id FROM ownership
                            INNER JOIN employee ON employee.id = ownership.employee_id
                            INNER JOIN restaurant ON restaurant.id = ownership.restaurant_id
@@ -122,8 +137,10 @@ namespace PrototipoTCC
             var command = new MySqlCommand(sql, DAO_Conexao.con);
             command.Parameters.AddWithValue("@id", employee.Id);
             var reader = command.ExecuteNonQuery();
+
+            con.Close();
+
             return reader != 0;
-            
         }
 
         public Employee Employee { get; private set; }
@@ -131,6 +148,8 @@ namespace PrototipoTCC
         public Employee Login(string email, string senha)
         {
             var con = DAO_Conexao.con;
+            con.Open();
+            
      
             var sql = @"SELECT public_id as id, email, username, password FROM employee
                            WHERE employee.email = @email
@@ -141,19 +160,21 @@ namespace PrototipoTCC
             
             using (var reader = command.ExecuteReader())
             {
-                if (reader.Read()) { 
+                if (reader.Read())
+                {
                     string senhaDB = reader.GetString("password");
-                    if (senha == senhaDB)                
+                    if (senha == senhaDB)
                     {
                         var employee = new Employee(reader.GetString("id"), reader.GetString("username"), reader.GetString("email"));
-                        DAO_Conexao.con.Close();
+                        con.Close();
                         Employee = employee;
                         return employee;
                         //return new Employee(reader.GetString("id"), reader.GetString("username"), reader.GetString("email")); 
-                    
-                    } else throw new Exception("Senha incorreta.");
+
+                    }
+                    else { con.Close(); throw new Exception("Senha incorreta."); }
                 }
-                else throw new Exception("Usuário não encontrado.");
+                else { con.Close(); throw new Exception("Usuário não encontrado."); }
             }
         }
     }

@@ -16,7 +16,6 @@ namespace PrototipoTCC
             {
                 string connectionString = $"server={local};User ID={user};database={banco};password={senha}";
                 con = new MySqlConnection(connectionString);
-                con.Open();
                 return true;
             }
             catch (Exception ex)
@@ -59,6 +58,7 @@ namespace PrototipoTCC
                 }   
 
                 con.Open();
+                MessageBox.Show(con.State.ToString());
                 string sql = $"SELECT * FROM employee WHERE email='{email}' AND password='{senha}'";
                 MySqlCommand login = new MySqlCommand(sql, con);
                 Console.WriteLine(sql);

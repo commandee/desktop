@@ -22,16 +22,16 @@ namespace PrototipoTCC
 
         public void Login(string email, string password)
         {
-            using var conn = DAO_Conexao.con;
+            var conn = DAO_Conexao.con;
 
             var sql = @"SELECT email, username, password, public_id as id
                         FROM employee
                         WHERE employee.email = @email
                       ";
 
-            using var command = new MySqlCommand(sql, conn);
+            var command = new MySqlCommand(sql, conn);
             command.Parameters.AddWithValue("@email", email);
-            using var reader = command.ExecuteReader();
+            var reader = command.ExecuteReader();
 
             if (!reader.Read())
                 throw new Exception("Usuário não encontrado");
