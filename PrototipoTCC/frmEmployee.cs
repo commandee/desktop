@@ -33,7 +33,12 @@ namespace PrototipoTCC
                 }
                 dgvEmployee.ClearSelection();
                 DAO_Conexao.con.Open();
-                string sql = $"SELECT employee.username, employee.email, employee.public_id as id FROM employment INNER JOIN employee ON employee.id = employment.employee_id INNER JOIN restaurant ON restaurant.id = employment.restaurant_id LIMIT 0, 1000";
+                string sql = @"SELECT employee.username, employee.email, employee.public_id as id 
+                               FROM employment 
+                               INNER JOIN employee ON employee.id = employment.employee_id 
+                               INNER JOIN restaurant ON restaurant.id = employment.restaurant_id 
+                               LIMIT 1000";
+
                 MySqlCommand command = new MySqlCommand(sql, DAO_Conexao.con);
                 MySqlDataAdapter adapter = new MySqlDataAdapter(command);
                 DataTable dt = new DataTable();
@@ -89,15 +94,9 @@ namespace PrototipoTCC
 
         private void txtConsulta_Enter(object sender, EventArgs e)
         {
-
             dgvEmployee.ClearSelection();
             txtSpec.Text = "";
             txtSpec.ForeColor = Color.Black;
-
-
-
-
-
         }
 
         private void btnRemv_Click(object sender, EventArgs e)
@@ -162,7 +161,7 @@ namespace PrototipoTCC
                                     DAO_Conexao.con.Close();
                                 }
                                 DAO_Conexao.con.Open();
-                                string sql = "DELETE FROM `employee` WHERE `email` = '" + emailToSelect + "'";
+                                string sql = $"DELETE FROM `employee` WHERE `email` = '{emailToSelect}'";
                                 MySqlCommand command = new MySqlCommand(sql, DAO_Conexao.con);
                                 command.ExecuteNonQuery();
                                 updateTable();

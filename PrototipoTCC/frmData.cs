@@ -1,4 +1,4 @@
-﻿using MySql.Data.MySqlClient;
+using MySql.Data.MySqlClient;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
@@ -84,9 +84,13 @@ namespace PrototipoTCC
                 //em nome do pai, do filho e do espirito santo, eu rezo para que isso funcione.
                 con.Open();
                 dgPedidos.ClearSelection();
-                string sql = "SELECT commanda_id, item_id, quantity, priority, status FROM `order`";
+
+                string sql = @"SELECT commanda_id, item_id, quantity, priority, status 
+                               FROM `order`";
+
                 MySqlCommand command = new MySqlCommand(sql, con);
                 MySqlDataAdapter adapter = new MySqlDataAdapter(command);
+
                 DataTable dt = new DataTable();
                 adapter.Fill(dt);
                 dgPedidos.DataSource = dt;
@@ -165,7 +169,7 @@ namespace PrototipoTCC
                 string sql = @"SELECT item.name as 'Nome', priority as 'Prioridade'
                                FROM `order`
                                INNER JOIN item on item.id = `order`.item_id
-                               ORDER BY priority DESC;";
+                               ORDER BY priority DESC";
 
                 MySqlCommand command = new MySqlCommand(sql, DAO_Conexao.con);
                 var adapter = new MySqlDataAdapter(command);

@@ -10,6 +10,5 @@ namespace PrototipoTCC
     {
         public static readonly EmpController empController = new EmpController();
         public static readonly RestaurantController restaurantController = new RestaurantController();
-
     }
 }
