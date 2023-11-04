@@ -38,21 +38,19 @@ namespace PrototipoTCC
         {
             string email = txtEmail.Text;
             string password = txtSenha.Text;
-                try
-                {
-                    Controllers.loginController.Login(email, password);
-                    cmbRestaurant.DataSource = Controllers.empController.Owns(Controllers.loginController.User);
-                    
-                    cmbRestaurant.Enabled = true;
-                    btnPesquisar.Visible = true;
-                }
-                catch (Exception ex)
-                {
-                    MessageBox.Show(ex.Message, "Alerta do Sistema", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                }       
-           
-            
 
+            try
+            {
+                Controllers.loginController.Login(email, password);
+                cmbRestaurant.DataSource = Controllers.empController.Owns(Controllers.loginController.User);
+                
+                cmbRestaurant.Enabled = true;
+                btnPesquisar.Visible = true;
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "Alerta do Sistema", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
         }
 
         private void FrmLogin_Load(object sender, EventArgs e)
@@ -64,9 +62,9 @@ namespace PrototipoTCC
             btnPrioridade.Enabled = false;
             btnAlterar.Enabled = false;
             txtEmail.Text = "printer@bigrat.monster";
-            //txtEmail.Text = "isa@email.com";
             txtSenha.Text = "prointer";
-            //txtSenha.Text = "$2a$10$0IgeNIMoENdke2FW3do1ZeFGJEmI..ddOoiqHvCtffwK1JxPnsr5i";
+            //txtEmail.Text = "isa@email.com";
+            //txtSenha.Text = "tectectec";
         }
 
         private void BtnTotal_Click(object sender, EventArgs e)
@@ -174,6 +172,7 @@ namespace PrototipoTCC
             btnMenosPedido.Enabled = true;
             btnPrioridade.Enabled = true;
             btnAlterar.Enabled = true;
+
             try
             {
                 dgPedidos.ClearSelection();
@@ -224,12 +223,14 @@ namespace PrototipoTCC
 
         private void cmbRestaurante_SelectedIndexChanged(object sender, EventArgs e)
         {
+            if (cmbRestaurant.SelectedIndex == -1)
+                return;
 
+            Controllers.restaurantController.Login(cmbRestaurant.Text);
         }
 
         private void BtnPesquisar_Click(object sender, EventArgs e)
         {
-
             this.Size = new Size(1216, 733);
         }
     }

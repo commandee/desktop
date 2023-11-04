@@ -25,6 +25,7 @@ namespace PrototipoTCC
             string username = txtUsername.Text.Trim();
             string password = txtPassword.Text.Trim();
             string passwordConfirm = txtConfirm.Text.Trim();
+            
             if (passwordConfirm == password)
             {
                 MessageBox.Show("Cadastro realizado!", "Alerta do Sistema", MessageBoxButtons.OK, MessageBoxIcon.Information);

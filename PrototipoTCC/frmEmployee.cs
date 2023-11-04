@@ -31,15 +31,17 @@ namespace PrototipoTCC
             {
                 dgvEmployee.ClearSelection();
 
-                string sql = $@"SELECT employee.username, employee.email, employee.public_id as id 
-                               FROM employment 
-                               INNER JOIN employee ON employee.id = employment.employee_id 
-                               INNER JOIN restaurant ON restaurant.id = '{restaurantId}'
-                               LIMIT 1000";
+                var sql = @"SELECT employee.username, employee.email, employee.public_id as id 
+                            FROM employment 
+                            INNER JOIN employee ON employee.id = employment.employee_id 
+                            INNER JOIN restaurant ON restaurant.id = @restaurantId
+                            LIMIT 1000";
 
-                using (var command = new MySqlCommand(sql, DAO_Conexao.con)) {                    
-                    MySqlDataAdapter adapter = new MySqlDataAdapter(command);
-                    DataTable dt = new DataTable();
+                using (var command = new MySqlCommand(sql, DAO_Conexao.con)) {
+                    command.Parameters.AddWithValue("@restaurantId", restaurantId);
+
+                    var adapter = new MySqlDataAdapter(command);
+                    var dt = new DataTable();
                     adapter.Fill(dt);
                     dgvEmployee.DataSource = dt;
                 }
@@ -128,51 +130,42 @@ namespace PrototipoTCC
             btnBusca.Visible = false;
             dgvEmployee.ClearSelection();
             string emailToSelect = txtSpec.Text;
-            updateTable();
-            if (!string.IsNullOrEmpty(emailToSelect))
-            {
-                bool foundRow = false;
 
-                foreach (DataGridViewRow row in dgvEmployee.Rows)
-                {
-                    if (row.Cells["email"].Value.ToString() == emailToSelect)
-                    {
-                        row.Selected = true;
-                        foundRow = true;
-                        break;
-                    }
-                }
-                if (foundRow)
-                {
-                        DialogResult result = MessageBox.Show("Deseja remover este funcionário?", "Alerta do Sistema", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
-                        if (result == DialogResult.Yes)
-                        {
-                            try
-                            {
-                                string sql = $"DELETE FROM `employee` WHERE `email` = @email";
-
-                                using (var command = new MySqlCommand(sql, DAO_Conexao.con)) {
-                                    command.Parameters.AddWithValue("@email", emailToSelect);
-                                    command.ExecuteNonQuery();
-
-                                    updateTable();
-                                    dgvEmployee.ClearSelection();
-                                }
-                            }
-                            catch (Exception ex)
-                            {
-                                Console.WriteLine(ex.Message);
-                            }
-
-                        }
-                    }
-                else
-                {
-                    MessageBox.Show("Insira um email válido", "Alerta do Sistema", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                }
-
+            if (string.IsNullOrEmpty(emailToSelect)) {
+                MessageBox.Show("Insira um email válido", "Alerta do Sistema", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
             }
 
+            foreach (DataGridViewRow row in dgvEmployee.Rows)
+            {
+                if (row.Cells["email"].Value.ToString() == emailToSelect)
+                {
+                    row.Selected = true;
+                    foundRow = true;
+                    break;
+                }
+            }
+
+            if (!foundRow) {
+                MessageBox.Show("Email não pertence a nenhum funcionário", "Alerta do Sistema", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+
+            DialogResult result = MessageBox.Show("Deseja remover este funcionário?", "Alerta do Sistema", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+                
+            if (result == DialogResult.No)
+                return;
+ 
+            try
+            {
+                Controllers.empController.Dismiss(emailToSelect);
+                updateTable();
+                dgvEmployee.ClearSelection();
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+            }
         }
 
         private void btnBusca_Click(object sender, EventArgs e)
