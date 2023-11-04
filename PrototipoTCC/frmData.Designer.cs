@@ -41,7 +41,7 @@
             this.btnMenosPedido = new System.Windows.Forms.Button();
             this.grpLogin = new System.Windows.Forms.GroupBox();
             this.btnPesquisar = new System.Windows.Forms.Button();
-            this.cmbRestaurante = new System.Windows.Forms.ComboBox();
+            this.cmbRestaurant = new System.Windows.Forms.ComboBox();
             this.btnEmployee = new System.Windows.Forms.Button();
             this.btnAlterar = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.dgPedidos)).BeginInit();
@@ -152,7 +152,7 @@
             // grpLogin
             // 
             this.grpLogin.Controls.Add(this.btnPesquisar);
-            this.grpLogin.Controls.Add(this.cmbRestaurante);
+            this.grpLogin.Controls.Add(this.cmbRestaurant);
             this.grpLogin.Controls.Add(this.label1);
             this.grpLogin.Controls.Add(this.txtEmail);
             this.grpLogin.Controls.Add(this.label3);
@@ -181,15 +181,15 @@
             // 
             // cmbRestaurante
             // 
-            this.cmbRestaurante.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.SuggestAppend;
-            this.cmbRestaurante.DisplayMember = "Name";
-            this.cmbRestaurante.Enabled = false;
-            this.cmbRestaurante.FormattingEnabled = true;
-            this.cmbRestaurante.Location = new System.Drawing.Point(666, 22);
-            this.cmbRestaurante.Name = "cmbRestaurante";
-            this.cmbRestaurante.Size = new System.Drawing.Size(504, 36);
-            this.cmbRestaurante.TabIndex = 6;
-            this.cmbRestaurante.SelectedIndexChanged += new System.EventHandler(this.cmbRestaurante_SelectedIndexChanged);
+            this.cmbRestaurant.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.SuggestAppend;
+            this.cmbRestaurant.DisplayMember = "Name";
+            this.cmbRestaurant.Enabled = false;
+            this.cmbRestaurant.FormattingEnabled = true;
+            this.cmbRestaurant.Location = new System.Drawing.Point(666, 22);
+            this.cmbRestaurant.Name = "cmbRestaurante";
+            this.cmbRestaurant.Size = new System.Drawing.Size(504, 36);
+            this.cmbRestaurant.TabIndex = 6;
+            this.cmbRestaurant.SelectedIndexChanged += new System.EventHandler(this.cmbRestaurante_SelectedIndexChanged);
             // 
             // btnEmployee
             // 
@@ -252,7 +252,7 @@
         private System.Windows.Forms.GroupBox grpLogin;
         private System.Windows.Forms.Button btnEmployee;
         private System.Windows.Forms.Button btnAlterar;
-        private System.Windows.Forms.ComboBox cmbRestaurante;
+        public System.Windows.Forms.ComboBox cmbRestaurant;
         private System.Windows.Forms.Button btnPesquisar;
     }
 }

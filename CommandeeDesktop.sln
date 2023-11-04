@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.4.33213.308
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PrototipoTCC", "PrototipoTCC\PrototipoTCC.csproj", "{7BEB87CE-C67F-4131-8E59-0A2B92A0A740}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CommandeeDesktop", "PrototipoTCC\CommandeeDesktop.csproj", "{7BEB87CE-C67F-4131-8E59-0A2B92A0A740}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Itens de Solução", "Itens de Solução", "{0162C6B3-EEC3-4D85-8DC2-704833E745AD}"
 	ProjectSection(SolutionItems) = preProject

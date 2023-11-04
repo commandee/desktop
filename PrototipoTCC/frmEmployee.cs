@@ -9,6 +9,7 @@ using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using BCryptNet = BCrypt.Net.BCrypt;
 
 namespace PrototipoTCC
 {
@@ -20,23 +21,25 @@ namespace PrototipoTCC
         }
         bool consulta = false;
         bool delete = false;
+        frmLogin frm = new frmLogin();
 
 
         public void updateTable()
         {
-
+            string rest_id = frm.cmbRestaurant.SelectedValue.ToString();
             try
             {
+               
                 if (DAO_Conexao.con.State == ConnectionState.Open)
                 {
                     DAO_Conexao.con.Close();
                 }
                 dgvEmployee.ClearSelection();
                 DAO_Conexao.con.Open();
-                string sql = @"SELECT employee.username, employee.email, employee.public_id as id 
+                string sql = $@"SELECT employee.username, employee.email, employee.public_id as id 
                                FROM employment 
                                INNER JOIN employee ON employee.id = employment.employee_id 
-                               INNER JOIN restaurant ON restaurant.id = employment.restaurant_id 
+                               INNER JOIN restaurant ON restaurant.id = '{rest_id}'
                                LIMIT 1000";
 
                 MySqlCommand command = new MySqlCommand(sql, DAO_Conexao.con);
@@ -146,11 +149,6 @@ namespace PrototipoTCC
                 }
                 if (foundRow)
                 {
-                    if (txtSpec.Text == "nacrai@gmail.com")
-                    {
-                        MessageBox.Show("Este funcionário não pode ser removido.", "Alerta do Sistema", MessageBoxButtons.OKCancel, MessageBoxIcon.Error);
-                    }else
-                    {
                         DialogResult result = MessageBox.Show("Deseja remover este funcionário?", "Alerta do Sistema", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
                         if (result == DialogResult.Yes)
                         {
@@ -175,9 +173,6 @@ namespace PrototipoTCC
 
                         }
                     }
-                    
-
-                }
                 else
                 {
                     MessageBox.Show("Insira um email válido", "Alerta do Sistema", MessageBoxButtons.OK, MessageBoxIcon.Error);

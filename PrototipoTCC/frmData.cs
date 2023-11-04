@@ -40,11 +40,10 @@ namespace PrototipoTCC
             string password = txtSenha.Text;
                 try
                 {
-                DAO_Conexao.Login(email, password);
-                var employee = Controllers.empController.Login(email, password);
-                    cmbRestaurante.DataSource = Controllers.empController.Owns(employee);
+                    Controllers.loginController.Login(email, password);
+                    cmbRestaurant.DataSource = Controllers.empController.Owns(Controllers.loginController.User);
                     
-                    cmbRestaurante.Enabled = true;
+                    cmbRestaurant.Enabled = true;
                     btnPesquisar.Visible = true;
                 }
                 catch (Exception ex)
@@ -64,9 +63,9 @@ namespace PrototipoTCC
             btnMenosPedido.Enabled = false;
             btnPrioridade.Enabled = false;
             btnAlterar.Enabled = false;
-            txtEmail.Text = "ame.pistache@gmail.com";
+            txtEmail.Text = "printer@bigrat.monster";
             //txtEmail.Text = "isa@email.com";
-            txtSenha.Text = "$2a$10$dDF5aoRIk62EuzL75Dxn5u/2eWv9e.UDK5PHeWXpEAAAjABrOciRK";
+            txtSenha.Text = "prointer";
             //txtSenha.Text = "$2a$10$0IgeNIMoENdke2FW3do1ZeFGJEmI..ddOoiqHvCtffwK1JxPnsr5i";
         }
 
@@ -242,10 +241,10 @@ namespace PrototipoTCC
             grpLogin.Visible = true;
             txtEmail.Text = "";
             txtSenha.Text = "";
-            cmbRestaurante.DataSource = null;
-            cmbRestaurante.DisplayMember = "Name";
+            cmbRestaurant.DataSource = null;
+            cmbRestaurant.DisplayMember = "Name";
             btnPesquisar.Visible = false;
-            cmbRestaurante.Enabled = false;
+            cmbRestaurant.Enabled = false;
             }
 
         private void grpLogin_Enter(object sender, EventArgs e)

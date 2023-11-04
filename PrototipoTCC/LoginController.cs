@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using MySql.Data.MySqlClient;
 using System.Threading.Tasks;
+using System.Windows.Forms;
 
 namespace PrototipoTCC
 {
@@ -20,9 +21,20 @@ namespace PrototipoTCC
     {
         public Employee User { get; private set; }
 
+        public static bool PasswordCompare(string password, string hash)
+        {
+            return BCrypt.Net.BCrypt.Verify(password, hash);
+        }
+
         public void Login(string email, string password)
         {
+            
             var conn = DAO_Conexao.con;
+            if (conn.State == System.Data.ConnectionState.Closed) {
+                MessageBox.Show("prointer");
+                conn.Open();
+            }
+            
 
             var sql = @"SELECT email, username, password, public_id as id
                         FROM employee
@@ -38,10 +50,12 @@ namespace PrototipoTCC
 
             var dbPassword = reader.GetString("password");
 
-            if (password != dbPassword)
+            if (!PasswordCompare(password, dbPassword)) 
                 throw new Exception("Senha incorreta");
 
             User = new Employee(reader.GetString("id"), reader.GetString("username"), reader.GetString("email"));
+            reader.Close();
+            conn.Close();
         }
 
         public void Logout()

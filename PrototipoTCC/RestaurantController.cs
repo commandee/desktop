@@ -31,12 +31,13 @@ namespace PrototipoTCC
 
         public void Login(Employee employee, string restName)
         {
+
             if (DAO_Conexao.con.State == System.Data.ConnectionState.Closed)
                 DAO_Conexao.con.Open();
-            string sql = @"SELECT restaurant.public_id as id, restaurant.name, restaurant.address
-                           FROM ownership
-                           INNER JOIN restaurant on restaurant.id = ownership.restaurant_id
-                           INNER JOIN employee on employee.id = ownership.employee_id
+            string sql = @"SELECT restaurant.public_id as id, restaurant.name, restaurant.address, role
+                           FROM employment
+                           INNER JOIN restaurant on restaurant.id = employment.restaurant_id
+                           INNER JOIN employee on employee.id = employment.employee_id
                            WHERE employee.public_id = @id AND restaurant.name = @name";
             MySqlCommand command = new MySqlCommand(sql, DAO_Conexao.con);
             command.Parameters.AddWithValue("@id", employee.Id);
@@ -44,6 +45,8 @@ namespace PrototipoTCC
             MySqlDataReader reader = command.ExecuteReader();
             if (reader.Read())
             {
+                if (reader.GetString("role") != "admin")
+                    throw new Exception("Usuário não é administrador do restaurante");
                 Restaurant = new Restaurant(reader.GetString("id"), reader.GetString("name"), reader.GetString("address"));
             }
             DAO_Conexao.con.Close();
