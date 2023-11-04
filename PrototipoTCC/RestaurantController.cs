@@ -99,7 +99,7 @@ namespace PrototipoTCC
                            INNER JOIN employee on employee.id = employment.employee_id
                            WHERE restaurant.public_id = @id";
 
-            using (command = new MySqlCommand(sql, DAO_Conexao.con)) {
+            using ( var command = new MySqlCommand(sql, DAO_Conexao.con)) {
                 command.Parameters.AddWithValue("@id", Restaurant.Id);
                 using (var reader = command.ExecuteReader()) {
                     List<Employee> employees = new List<Employee>();
