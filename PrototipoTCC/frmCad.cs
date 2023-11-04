@@ -27,25 +27,12 @@ namespace PrototipoTCC
             string passwordConfirm = txtConfirm.Text.Trim();
             if (passwordConfirm == password)
             {
-                try
-                {
-                    if (DAO_Conexao.con.State == ConnectionState.Open)
-                    {
-                        DAO_Conexao.con.Close();
-                    }
-                    
-                } catch (Exception ex)
-                {
-                    Console.WriteLine(ex.Message);
-                }
                 MessageBox.Show("Cadastro realizado!", "Alerta do Sistema", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                this.Close();
-                
-            } else
+            } 
+            else
             {
                 MessageBox.Show("As senhas não coincidem.", "Alerta do Sistema", MessageBoxButtons.OKCancel, MessageBoxIcon.Error);
             }
-            
         }
 
         private void frmCad_Load(object sender, EventArgs e)

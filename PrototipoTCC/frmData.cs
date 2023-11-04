@@ -81,33 +81,29 @@ namespace PrototipoTCC
             try
             {
                 //em nome do pai, do filho e do espirito santo, eu rezo para que isso funcione.
-                con.Open();
                 dgPedidos.ClearSelection();
 
-                string sql = @"SELECT commanda_id, item_id, quantity, priority, status 
-                               FROM `order`";
+                var sql = @"SELECT commanda_id, item_id, quantity, priority, status 
+                            FROM `order`";
 
-                MySqlCommand command = new MySqlCommand(sql, con);
-                MySqlDataAdapter adapter = new MySqlDataAdapter(command);
+                using (var command = new MySqlCommand(sql, con)) {
+                    var adapter = new MySqlDataAdapter(command);
 
-                DataTable dt = new DataTable();
-                adapter.Fill(dt);
-                dgPedidos.DataSource = dt;
-                dgPedidos.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.DisplayedCells;
-                dgPedidos.AutoSizeRowsMode = DataGridViewAutoSizeRowsMode.DisplayedCells;
-                dgPedidos.AllowUserToAddRows = false;
-                dgPedidos.AllowUserToDeleteRows = false;
-                dgPedidos.AllowUserToOrderColumns = false;
-                dgPedidos.AllowUserToResizeRows = false;
-                dgPedidos.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
+                    var dt = new DataTable();
+                    adapter.Fill(dt);
+                    dgPedidos.DataSource = dt;
+                    dgPedidos.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.DisplayedCells;
+                    dgPedidos.AutoSizeRowsMode = DataGridViewAutoSizeRowsMode.DisplayedCells;
+                    dgPedidos.AllowUserToAddRows = false;
+                    dgPedidos.AllowUserToDeleteRows = false;
+                    dgPedidos.AllowUserToOrderColumns = false;
+                    dgPedidos.AllowUserToResizeRows = false;
+                    dgPedidos.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
+                }
             }
             catch (Exception ex)
             {
                 MessageBox.Show(ex.Message);
-            } 
-            finally
-            {
-                con.Close();
             }
         }
 
@@ -117,36 +113,28 @@ namespace PrototipoTCC
             btnMenosPedido.Enabled = true;
             btnPrioridade.Enabled = true;
             btnAlterar.Enabled = true;
+
             try
             {
-                if (DAO_Conexao.con.State == ConnectionState.Open)
-                {
-                    DAO_Conexao.con.Close();
-                }
                 dgPedidos.ClearSelection();
-                DAO_Conexao.con.Open();
 
-                string sql = @"SELECT item.name as 'Nome', COUNT(item_id) AS 'Frequência'
-                               FROM `order`
-                               INNER JOIN item on item.id = `order`.item_id
-                               GROUP BY item_id
-                               ORDER BY `Frequência` DESC;";
+                var sql = @"SELECT item.name as 'Nome', COUNT(item_id) AS 'Frequência'
+                            FROM `order`
+                            INNER JOIN item on item.id = `order`.item_id
+                            GROUP BY item_id
+                            ORDER BY `Frequência` DESC;";
 
-                MySqlCommand command = new MySqlCommand(sql, DAO_Conexao.con);
-                var adapter = new MySqlDataAdapter(command);
+                using (var command = new MySqlCommand(sql, DAO_Conexao.con)) {
+                    var adapter = new MySqlDataAdapter(command);
 
-                DataTable dt = new DataTable();
-                adapter.Fill(dt);
-                dgPedidos.DataSource = dt;
-
+                    DataTable dt = new DataTable();
+                    adapter.Fill(dt);
+                    dgPedidos.DataSource = dt;
+                }
             }
             catch (Exception ex)
             {
                 MessageBox.Show(ex.Message);
-            }
-            finally
-            {
-                DAO_Conexao.con.Close();
             }
         }
 
@@ -158,33 +146,24 @@ namespace PrototipoTCC
             btnAlterar.Enabled = true;
             try
             {
-                if (DAO_Conexao.con.State == ConnectionState.Open)
-                {
-                    DAO_Conexao.con.Close();
-                }
                 dgPedidos.ClearSelection();
-                DAO_Conexao.con.Open();
 
                 string sql = @"SELECT item.name as 'Nome', priority as 'Prioridade'
                                FROM `order`
                                INNER JOIN item on item.id = `order`.item_id
                                ORDER BY priority DESC";
 
-                MySqlCommand command = new MySqlCommand(sql, DAO_Conexao.con);
-                var adapter = new MySqlDataAdapter(command);
+                using (var command = new MySqlCommand(sql, DAO_Conexao.con)) {
+                    var adapter = new MySqlDataAdapter(command);
 
-                DataTable dt = new DataTable();
-                adapter.Fill(dt);
-                dgPedidos.DataSource = dt;
-
+                    DataTable dt = new DataTable();
+                    adapter.Fill(dt);
+                    dgPedidos.DataSource = dt;
+                }
             }
             catch (Exception ex)
             {
                 MessageBox.Show(ex.Message);
-            }
-            finally
-            {
-                DAO_Conexao.con.Close();
             }
         }
 
@@ -197,12 +176,7 @@ namespace PrototipoTCC
             btnAlterar.Enabled = true;
             try
             {
-                if (DAO_Conexao.con.State == ConnectionState.Open)
-                {
-                    DAO_Conexao.con.Close();
-                }
                 dgPedidos.ClearSelection();
-                DAO_Conexao.con.Open();
 
                 string sql = @"SELECT item.name as 'Nome', COUNT(item_id) AS 'Frequência'
                                FROM `order`
@@ -210,21 +184,17 @@ namespace PrototipoTCC
                                GROUP BY item_id
                                ORDER BY `Frequência` ASC";
 
-                MySqlCommand command = new MySqlCommand(sql, DAO_Conexao.con);
-                var adapter = new MySqlDataAdapter(command);
+                using (var command = new MySqlCommand(sql, DAO_Conexao.con)) {
+                    var adapter = new MySqlDataAdapter(command);
 
-                DataTable dt = new DataTable();
-                adapter.Fill(dt);
-                dgPedidos.DataSource = dt;
-
+                    DataTable dt = new DataTable();
+                    adapter.Fill(dt);
+                    dgPedidos.DataSource = dt;
+                }
             }
             catch (Exception ex)
             {
                 MessageBox.Show(ex.Message);
-            } 
-            finally
-            {
-                DAO_Conexao.con.Close();
             }
         }
 
@@ -245,7 +215,7 @@ namespace PrototipoTCC
             cmbRestaurant.DisplayMember = "Name";
             btnPesquisar.Visible = false;
             cmbRestaurant.Enabled = false;
-            }
+        }
 
         private void grpLogin_Enter(object sender, EventArgs e)
         {

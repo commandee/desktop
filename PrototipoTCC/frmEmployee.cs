@@ -26,27 +26,24 @@ namespace PrototipoTCC
 
         public void updateTable()
         {
-            string rest_id = frm.cmbRestaurant.SelectedValue.ToString();
+            string restaurantId = frm.cmbRestaurant.SelectedValue.ToString();
             try
             {
-               
-                if (DAO_Conexao.con.State == ConnectionState.Open)
-                {
-                    DAO_Conexao.con.Close();
-                }
                 dgvEmployee.ClearSelection();
-                DAO_Conexao.con.Open();
+
                 string sql = $@"SELECT employee.username, employee.email, employee.public_id as id 
                                FROM employment 
                                INNER JOIN employee ON employee.id = employment.employee_id 
-                               INNER JOIN restaurant ON restaurant.id = '{rest_id}'
+                               INNER JOIN restaurant ON restaurant.id = '{restaurantId}'
                                LIMIT 1000";
 
-                MySqlCommand command = new MySqlCommand(sql, DAO_Conexao.con);
-                MySqlDataAdapter adapter = new MySqlDataAdapter(command);
-                DataTable dt = new DataTable();
-                adapter.Fill(dt);
-                dgvEmployee.DataSource = dt;
+                using (var command = new MySqlCommand(sql, DAO_Conexao.con)) {                    
+                    MySqlDataAdapter adapter = new MySqlDataAdapter(command);
+                    DataTable dt = new DataTable();
+                    adapter.Fill(dt);
+                    dgvEmployee.DataSource = dt;
+                }
+
                 dgvEmployee.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.DisplayedCells;
                 dgvEmployee.AutoSizeRowsMode = DataGridViewAutoSizeRowsMode.DisplayedCells;
                 dgvEmployee.AllowUserToAddRows = false;
@@ -54,8 +51,6 @@ namespace PrototipoTCC
                 dgvEmployee.AllowUserToOrderColumns = false;
                 dgvEmployee.AllowUserToResizeRows = false;
                 dgvEmployee.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
-
-                DAO_Conexao.con.Close();
             }
             catch (Exception ex)
             {
@@ -154,17 +149,15 @@ namespace PrototipoTCC
                         {
                             try
                             {
-                                if (DAO_Conexao.con.State == ConnectionState.Open)
-                                {
-                                    DAO_Conexao.con.Close();
+                                string sql = $"DELETE FROM `employee` WHERE `email` = @email";
+
+                                using (var command = new MySqlCommand(sql, DAO_Conexao.con)) {
+                                    command.AddWithValue("@email", emailToSelect);
+                                    command.ExecuteNonQuery();
+
+                                    updateTable();
+                                    dgvEmployee.ClearSelection();
                                 }
-                                DAO_Conexao.con.Open();
-                                string sql = $"DELETE FROM `employee` WHERE `email` = '{emailToSelect}'";
-                                MySqlCommand command = new MySqlCommand(sql, DAO_Conexao.con);
-                                command.ExecuteNonQuery();
-                                updateTable();
-                                dgvEmployee.ClearSelection();
-                                DAO_Conexao.con.Close();
                             }
                             catch (Exception ex)
                             {

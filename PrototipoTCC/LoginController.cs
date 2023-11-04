@@ -30,32 +30,26 @@ namespace PrototipoTCC
         {
             
             var conn = DAO_Conexao.con;
-            if (conn.State == System.Data.ConnectionState.Closed) {
-                MessageBox.Show("prointer");
-                conn.Open();
-            }
-            
 
             var sql = @"SELECT email, username, password, public_id as id
                         FROM employee
                         WHERE employee.email = @email
                       ";
 
-            var command = new MySqlCommand(sql, conn);
-            command.Parameters.AddWithValue("@email", email);
-            var reader = command.ExecuteReader();
+            using (var command = new MySqlCommand(sql, conn)) {
+                command.Parameters.AddWithValue("@email", email);
+                var reader = command.ExecuteReader();
 
-            if (!reader.Read())
-                throw new Exception("Usuário não encontrado");
+                if (!reader.Read())
+                    throw new Exception("Usuário não encontrado");
 
-            var dbPassword = reader.GetString("password");
+                var dbPassword = reader.GetString("password");
 
-            if (!PasswordCompare(password, dbPassword)) 
-                throw new Exception("Senha incorreta");
+                if (!PasswordCompare(password, dbPassword)) 
+                    throw new Exception("Senha incorreta");
 
-            User = new Employee(reader.GetString("id"), reader.GetString("username"), reader.GetString("email"));
-            reader.Close();
-            conn.Close();
+                User = new Employee(reader.GetString("id"), reader.GetString("username"), reader.GetString("email"));
+            }
         }
 
         public void Logout()
