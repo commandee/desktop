@@ -40,10 +40,11 @@ namespace PrototipoTCC
             using (var command = new MySqlCommand(sql, DAO_Conexao.con)) {
                 command.Parameters.AddWithValue("@id", employee.Id);
                 command.Parameters.AddWithValue("@name", restName);
-                MySqlDataReader reader = command.ExecuteReader();
-                
-                if (reader.Read())
-                {
+
+                using (var reader = command.ExecuteReader()) {
+                    if (!reader.Read())
+                        throw new Exception("Usuário não trabalha neste restaurante.");
+
                     if (reader.GetString("role") != "admin")
                         throw new Exception("Usuário não é administrador do restaurante");
                     Restaurant = new Restaurant(reader.GetString("id"), reader.GetString("name"), reader.GetString("address"));
@@ -75,16 +76,18 @@ namespace PrototipoTCC
 
             using (var command = new MySqlCommand(sql, DAO_Conexao.con)) {
                 command.Parameters.AddWithValue("@id", Restaurant.Id);
-                MySqlDataReader reader = command.ExecuteReader();
-                List<Employee> employees = new List<Employee>();
 
-                while (reader.Read())
-                {
-                    Employee employee = new Employee(reader.GetString("id"), reader.GetString("email"), reader.GetString("username"));
-                    employees.Add(employee);
+                using (var reader = command.ExecuteReader()) {
+                    List<Employee> employees = new List<Employee>();
+
+                    while (reader.Read())
+                    {
+                        Employee employee = new Employee(reader.GetString("id"), reader.GetString("email"), reader.GetString("username"));
+                        employees.Add(employee);
+                    }
+
+                    return employees;
                 }
-
-                return employees;
             }
         }
 
@@ -98,17 +101,17 @@ namespace PrototipoTCC
 
             using (command = new MySqlCommand(sql, DAO_Conexao.con)) {
                 command.Parameters.AddWithValue("@id", Restaurant.Id);
-                MySqlDataReader reader = command.ExecuteReader();
+                using (var reader = command.ExecuteReader()) {
+                    List<Employee> employees = new List<Employee>();
 
-                List<Employee> employees = new List<Employee>();
+                    while (reader.Read())
+                    {
+                        Employee employee = new Employee(reader.GetString("id"), reader.GetString("email"), reader.GetString("username"));
+                        employees.Add(employee);
+                    }   
 
-                while (reader.Read())
-                {
-                    Employee employee = new Employee(reader.GetString("id"), reader.GetString("email"), reader.GetString("username"));
-                    employees.Add(employee);
-                }   
-
-                return employees;
+                    return employees;
+                }
             }
         }
 

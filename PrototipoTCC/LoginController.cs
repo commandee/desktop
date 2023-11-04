@@ -38,17 +38,18 @@ namespace PrototipoTCC
 
             using (var command = new MySqlCommand(sql, conn)) {
                 command.Parameters.AddWithValue("@email", email);
-                var reader = command.ExecuteReader();
 
-                if (!reader.Read())
-                    throw new Exception("Usuário não encontrado");
+                using (var reader = command.ExecuteReader()) {
+                    if (!reader.Read())
+                        throw new Exception("Usuário não encontrado");
 
-                var dbPassword = reader.GetString("password");
+                    var dbPassword = reader.GetString("password");
 
-                if (!PasswordCompare(password, dbPassword)) 
-                    throw new Exception("Senha incorreta");
+                    if (!PasswordCompare(password, dbPassword)) 
+                        throw new Exception("Senha incorreta");
 
-                User = new Employee(reader.GetString("id"), reader.GetString("username"), reader.GetString("email"));
+                    User = new Employee(reader.GetString("id"), reader.GetString("username"), reader.GetString("email"));
+                }
             }
         }
 

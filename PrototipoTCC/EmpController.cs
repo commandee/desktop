@@ -55,16 +55,17 @@ namespace PrototipoTCC
             using (var command = new MySqlCommand(sql, DAO_Conexao.con)) {
                 command.Parameters.AddWithValue("@id", employee.Id);
 
-                var reader = command.ExecuteReader();
+                using (var reader = command.ExecuteReader()) {
+                    List<Restaurant> restaurants = new List<Restaurant>();
+                    while (reader.Read())
+                    {
+                        Restaurant restaurant = new Restaurant(reader.GetString("id"), reader.GetString("name"), reader.GetString("address"));
+                        restaurants.Add(restaurant);
+                    }
 
-                List<Restaurant> restaurants = new List<Restaurant>();
-                while (reader.Read())
-                {
-                    Restaurant restaurant = new Restaurant(reader.GetString("id"), reader.GetString("name"), reader.GetString("address"));
-                    restaurants.Add(restaurant);
+                    return restaurants;
                 }
 
-                return restaurants;
             }
         }
 
@@ -81,16 +82,17 @@ namespace PrototipoTCC
             using (var command = new MySqlCommand(sql, DAO_Conexao.con)) {
                 command.Parameters.AddWithValue("@id", employee.Id);
 
-                var reader = command.ExecuteReader();
-                List<Restaurant> restaurants = new List<Restaurant>();
+                using (var reader = command.ExecuteReader()) {
+                    List<Restaurant> restaurants = new List<Restaurant>();
 
-                while (reader.Read())
-                {
-                    Restaurant restaurant = new Restaurant(reader.GetString("id"), reader.GetString("name"), reader.GetString("address"));
-                    restaurants.Add(restaurant);
+                    while (reader.Read())
+                    {
+                        Restaurant restaurant = new Restaurant(reader.GetString("id"), reader.GetString("name"), reader.GetString("address"));
+                        restaurants.Add(restaurant);
+                    }
+
+                    return restaurants;
                 }
-
-                return restaurants;
             }
         }
 
@@ -105,16 +107,16 @@ namespace PrototipoTCC
 
             using (var command = new MySqlCommand(sql, DAO_Conexao.con))
             {
-                var reader = command.ExecuteReader();
+                using (var reader = command.ExecuteReader()) {
+                    List<Employee> employees = new List<Employee>();
+                    while (reader.Read())
+                    {
+                        Employee employee = new Employee(reader.GetString("username"), reader.GetString("email"), reader.GetString("id"));
+                        employees.Add(employee);
+                    }
 
-                List<Employee> employees = new List<Employee>();
-                while (reader.Read())
-                {
-                    Employee employee = new Employee(reader.GetString("username"), reader.GetString("email"), reader.GetString("id"));
-                    employees.Add(employee);
+                    return employees;
                 }
-
-                return employees;
             }
         }
 
@@ -150,21 +152,22 @@ namespace PrototipoTCC
             using (var command = new MySqlCommand(sql, DAO_Conexao.con))
             {
                 command.Parameters.AddWithValue("@email", email);
-                var reader = command.ExecuteReader();
 
-                if (reader.Read())
-                {
-                    string senhaDB = reader.GetString("password");
-                    if (senha == senhaDB)
+                using (var reader = command.ExecuteReader()) {
+                    if (reader.Read())
                     {
-                        var employee = new Employee(reader.GetString("id"), reader.GetString("username"), reader.GetString("email"));
-                        Employee = employee;
-                        return employee;
-                        //return new Employee(reader.GetString("id"), reader.GetString("username"), reader.GetString("email")); 
+                        string senhaDB = reader.GetString("password");
+                        if (senha == senhaDB)
+                        {
+                            var employee = new Employee(reader.GetString("id"), reader.GetString("username"), reader.GetString("email"));
+                            Employee = employee;
+                            return employee;
+                            //return new Employee(reader.GetString("id"), reader.GetString("username"), reader.GetString("email")); 
+                        }
+                        else throw new Exception("Senha incorreta.");
                     }
-                    else throw new Exception("Senha incorreta.");
+                    else throw new Exception("Usuário não encontrado.");
                 }
-                else throw new Exception("Usuário não encontrado.");
             }
         }
     }
