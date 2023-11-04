@@ -102,11 +102,11 @@ namespace PrototipoTCC
             using (command = new MySqlCommand(sql, DAO_Conexao.con)) {
                 command.Parameters.AddWithValue("@id", Restaurant.Id);
                 using (var reader = command.ExecuteReader()) {
-                    List<Employee> employees = new List<Employee>();
+                    var employees = new List<Employee>();
 
                     while (reader.Read())
                     {
-                        Employee employee = new Employee(reader.GetString("id"), reader.GetString("email"), reader.GetString("username"));
+                        var employee = new Employee(reader.GetString("id"), reader.GetString("email"), reader.GetString("username"));
                         employees.Add(employee);
                     }   
 
@@ -117,10 +117,10 @@ namespace PrototipoTCC
 
         public void Promote(Employee employee)
         {
-            string sql = @"INSERT INTO ownership (restaurant_id, employee_id)
-                           VALUES (
-                             (SELECT id FROM restaurant WHERE public_id = @restaurantID),
-                             (SELECT id FROM employee WHERE public_id = @employeeID))";
+            var sql = @"INSERT INTO ownership (restaurant_id, employee_id)
+                        VALUES (
+                          (SELECT id FROM restaurant WHERE public_id = @restaurantID),
+                          (SELECT id FROM employee WHERE public_id = @employeeID))";
 
             using (var command = new MySqlCommand(sql, DAO_Conexao.con)) {
                 command.Parameters.AddWithValue("@restaurantID", Restaurant.Id);

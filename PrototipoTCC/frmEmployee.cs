@@ -152,7 +152,7 @@ namespace PrototipoTCC
                                 string sql = $"DELETE FROM `employee` WHERE `email` = @email";
 
                                 using (var command = new MySqlCommand(sql, DAO_Conexao.con)) {
-                                    command.AddWithValue("@email", emailToSelect);
+                                    command.Parameters.AddWithValue("@email", emailToSelect);
                                     command.ExecuteNonQuery();
 
                                     updateTable();
