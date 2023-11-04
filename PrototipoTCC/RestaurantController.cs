@@ -29,7 +29,7 @@ namespace PrototipoTCC
     {
         public Restaurant Restaurant { get; private set; }
 
-        public void Login(Employee employee, string restName)
+        public void Login(string restaurant)
         {
             string sql = @"SELECT restaurant.public_id as id, restaurant.name, restaurant.address, role
                            FROM employment
@@ -38,8 +38,8 @@ namespace PrototipoTCC
                            WHERE employee.public_id = @id AND restaurant.name = @name";
 
             using (var command = new MySqlCommand(sql, DAO_Conexao.con)) {
-                command.Parameters.AddWithValue("@id", employee.Id);
-                command.Parameters.AddWithValue("@name", restName);
+                command.Parameters.AddWithValue("@id", Controllers.empController.User.Id);
+                command.Parameters.AddWithValue("@name", restaurant);
 
                 using (var reader = command.ExecuteReader()) {
                     if (!reader.Read())
@@ -115,45 +115,78 @@ namespace PrototipoTCC
             }
         }
 
+        public void Dismiss(string email)
+        {
+            var con = DAO_Conexao.con;
+
+            var sql = @"DELETE FROM employment
+                        INNER JOIN employee ON employee.id = employment.employee_id
+                        INNER JOIN restaurant ON restaurant.id = employment.restaurant_id
+                        WHERE employee.email = @email
+                        AND restaurant.public_id = @restaurantID";
+
+            using (var command = new MySqlCommand(sql, con))
+            {
+                command.Parameters.AddWithValue("@email", email);
+                command.Parameters.AddWithValue("@restaurantID", Restaurant.Id);
+
+                var res = command.ExecuteNonQuery();
+
+                if (res == 0)
+                    throw new Exception("Usuário não encontrado");
+            }
+        }
+
+        public void Demote(string email)
+        {
+            var con = DAO_Conexao.con;
+
+            var sql = @"UPDATE employment
+                        INNER JOIN employee ON employee.id = employment.employee_id
+                        INNER JOIN restaurant ON restaurant.id = employment.restaurant_id
+                        SET role = 'employee'
+                        WHERE employee.email = @email
+                        AND restaurant.public_id = @restaurantID";
+
+            using (var command = new MySqlCommand(sql, con))
+            {
+                command.Parameters.AddWithValue("@email", email);
+                command.Parameters.AddWithValue("@restaurantID", Restaurant.Id);
+                var res = command.ExecuteNonQuery();
+
+                if (res == 0)
+                    throw new Exception("Usuário não encontrado");
+            }
+        }
+
         public void Promote(Employee employee)
         {
-            var sql = @"INSERT INTO ownership (restaurant_id, employee_id)
+            var sql = @"UPDATE employment
+                        INNER JOIN employee ON employee.id = employment.employee_id
+                        INNER JOIN restaurant ON restaurant.id = employment.restaurant_id
+                        SET role = 'admin'
+                        WHERE employee.public_id = @id
+                        AND restaurant.public_id = @restaurantID";
+
+            using (var command = new MySqlCommand(sql, DAO_Conexao.con)) {
+                command.Parameters.AddWithValue("@restaurantID", Restaurant.Id);
+                command.Parameters.AddWithValue("@employeeID", employee.Id);
+                command.ExecuteNonQuery();
+            }
+        }
+
+        public void Employ(string email) {
+            var sql = @"INSERT INTO employment (restaurant_id, employee_id)
                         VALUES (
-                          (SELECT id FROM restaurant WHERE public_id = @restaurantID),
-                          (SELECT id FROM employee WHERE public_id = @employeeID))";
+                            (SELECT id FROM restaurant WHERE restaurant.public_id = @restaurantID),
+                            (SELECT id FROM employee WHERE employee.email = @email)
+                        )";
 
             using (var command = new MySqlCommand(sql, DAO_Conexao.con)) {
                 command.Parameters.AddWithValue("@restaurantID", Restaurant.Id);
-                command.Parameters.AddWithValue("@employeeID", employee.Id);
-                command.ExecuteNonQuery();
-            }
-        }
-
-        public void Demote(Employee employee)
-        {
-            string sql = @"DELETE FROM ownership
-                           WHERE restaurant_id = (SELECT id FROM restaurant WHERE public_id = @restaurantID)
-                           AND employee_id = (SELECT id FROM employee WHERE public_id = @employeeID)";  
-
-            using (var command = new MySqlCommand(sql, DAO_Conexao.con)) {
-                command.Parameters.AddWithValue("@restaurantID", Restaurant.Id);
-                command.Parameters.AddWithValue("@employeeID", employee.Id);
-                command.ExecuteNonQuery();
-            }
-        }
-
-        public void RemoveEmployee(Employee employee)
-        {
-            string sql = @"DELETE FROM employment
-                           WHERE restaurant_id = (SELECT id FROM restaurant WHERE public_id = @restaurantID)
-                           AND employee_id = (SELECT id FROM employee WHERE public_id = @employeeID)";
-
-            using (var command = new MySqlCommand(sql, DAO_Conexao.con)) {
-                command.Parameters.AddWithValue("@restaurantID", Restaurant.Id);
-                command.Parameters.AddWithValue("@employeeID", employee.Id);
+                command.Parameters.AddWithValue("@email");
                 command.ExecuteNonQuery();
             }
         }
     }
-
 }
