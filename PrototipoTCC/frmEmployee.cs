@@ -136,6 +136,8 @@ namespace PrototipoTCC
                 return;
             }
 
+            var foundRow = false;
+
             foreach (DataGridViewRow row in dgvEmployee.Rows)
             {
                 if (row.Cells["email"].Value.ToString() == emailToSelect)
@@ -158,7 +160,7 @@ namespace PrototipoTCC
  
             try
             {
-                Controllers.empController.Dismiss(emailToSelect);
+                Controllers.restaurantController.Dismiss(emailToSelect);
                 updateTable();
                 dgvEmployee.ClearSelection();
             }

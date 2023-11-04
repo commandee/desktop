@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmEmployee));
             this.dgvEmployee = new System.Windows.Forms.DataGridView();
             this.btnCons = new System.Windows.Forms.Button();
             this.btnRemv = new System.Windows.Forms.Button();
@@ -131,9 +132,10 @@
             this.Controls.Add(this.btnCons);
             this.Controls.Add(this.dgvEmployee);
             this.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.Name = "frmEmployee";
-            this.Text = "frmEmployee";
+            this.Text = "Gerenciar funcionários";
             this.Load += new System.EventHandler(this.frmEmployee_Load);
             ((System.ComponentModel.ISupportInitialize)(this.dgvEmployee)).EndInit();
             this.ResumeLayout(false);

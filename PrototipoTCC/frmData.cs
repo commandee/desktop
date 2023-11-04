@@ -55,12 +55,12 @@ namespace PrototipoTCC
 
         private void FrmLogin_Load(object sender, EventArgs e)
         {
+            cmbRestaurant.Text = "Selecione um restaurante.";
             this.Size = new Size(1216, 230);
             dgPedidos.Enabled = false;
             btnMaisPedido.Enabled = false;
             btnMenosPedido.Enabled = false;
             btnPrioridade.Enabled = false;
-            btnAlterar.Enabled = false;
             txtEmail.Text = "printer@bigrat.monster";
             txtSenha.Text = "prointer";
             //txtEmail.Text = "isa@email.com";
@@ -72,7 +72,6 @@ namespace PrototipoTCC
             btnMaisPedido.Enabled = true;
             btnMenosPedido.Enabled = true;
             btnPrioridade.Enabled = true;
-            btnAlterar.Enabled = true;
 
             var con = DAO_Conexao.con;
 
@@ -81,7 +80,7 @@ namespace PrototipoTCC
                 //em nome do pai, do filho e do espirito santo, eu rezo para que isso funcione.
                 dgPedidos.ClearSelection();
 
-                var sql = @"SELECT commanda_id, item_id, quantity, priority, status 
+                var sql = @"SELECT public_id AS 'ID', quantity AS 'Quantidade', priority AS 'Prioridade', status AS 'Status'
                             FROM `order`";
 
                 using (var command = new MySqlCommand(sql, con)) {
@@ -110,15 +109,14 @@ namespace PrototipoTCC
             btnMaisPedido.Enabled = true;
             btnMenosPedido.Enabled = true;
             btnPrioridade.Enabled = true;
-            btnAlterar.Enabled = true;
 
             try
             {
                 dgPedidos.ClearSelection();
 
-                var sql = @"SELECT item.name as 'Nome', COUNT(item_id) AS 'Frequência'
+                var sql = @"SELECT item.name AS 'Nome', COUNT(item_id) AS 'Frequência'
                             FROM `order`
-                            INNER JOIN item on item.id = `order`.item_id
+                            INNER JOIN item ON item.id = `order`.item_id
                             GROUP BY item_id
                             ORDER BY `Frequência` DESC;";
 
@@ -141,7 +139,6 @@ namespace PrototipoTCC
             btnMaisPedido.Enabled = true;
             btnMenosPedido.Enabled = true;
             btnPrioridade.Enabled = true;
-            btnAlterar.Enabled = true;
             try
             {
                 dgPedidos.ClearSelection();
@@ -171,7 +168,6 @@ namespace PrototipoTCC
             btnMaisPedido.Enabled = true;
             btnMenosPedido.Enabled = true;
             btnPrioridade.Enabled = true;
-            btnAlterar.Enabled = true;
 
             try
             {
@@ -206,7 +202,6 @@ namespace PrototipoTCC
         private void btnAlterar_Click(object sender, EventArgs e)
         {
             this.Size = new Size(1216, 230);
-            btnAlterar.Enabled = false;
             grpLogin.Visible = true;
             txtEmail.Text = "";
             txtSenha.Text = "";
@@ -223,14 +218,15 @@ namespace PrototipoTCC
 
         private void cmbRestaurante_SelectedIndexChanged(object sender, EventArgs e)
         {
-            if (cmbRestaurant.SelectedIndex == -1)
-                return;
-
+            
             Controllers.restaurantController.Login(cmbRestaurant.Text);
         }
 
         private void BtnPesquisar_Click(object sender, EventArgs e)
         {
+            if (cmbRestaurant.SelectedIndex == -1)
+                return;
+
             this.Size = new Size(1216, 733);
         }
     }

@@ -25,7 +25,7 @@ namespace PrototipoTCC
 
         Restaurant Restaurant { get; }
     }
-    internal class RestaurantController : IRestaurantController
+    internal class RestaurantController 
     {
         public Restaurant Restaurant { get; private set; }
 
@@ -38,7 +38,7 @@ namespace PrototipoTCC
                            WHERE employee.public_id = @id AND restaurant.name = @name";
 
             using (var command = new MySqlCommand(sql, DAO_Conexao.con)) {
-                command.Parameters.AddWithValue("@id", Controllers.empController.User.Id);
+                command.Parameters.AddWithValue("@id", Controllers.loginController.User.Id);
                 command.Parameters.AddWithValue("@name", restaurant);
 
                 using (var reader = command.ExecuteReader()) {
@@ -184,7 +184,7 @@ namespace PrototipoTCC
 
             using (var command = new MySqlCommand(sql, DAO_Conexao.con)) {
                 command.Parameters.AddWithValue("@restaurantID", Restaurant.Id);
-                command.Parameters.AddWithValue("@email");
+                command.Parameters.AddWithValue("@email", email);
                 command.ExecuteNonQuery();
             }
         }

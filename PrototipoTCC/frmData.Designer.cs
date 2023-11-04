@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmLogin));
             this.btnLogin = new System.Windows.Forms.Button();
             this.txtEmail = new System.Windows.Forms.TextBox();
             this.txtSenha = new System.Windows.Forms.TextBox();
@@ -43,7 +44,6 @@
             this.btnPesquisar = new System.Windows.Forms.Button();
             this.cmbRestaurant = new System.Windows.Forms.ComboBox();
             this.btnEmployee = new System.Windows.Forms.Button();
-            this.btnAlterar = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.dgPedidos)).BeginInit();
             this.grpLogin.SuspendLayout();
             this.SuspendLayout();
@@ -63,14 +63,14 @@
             // 
             this.txtEmail.Location = new System.Drawing.Point(76, 22);
             this.txtEmail.Name = "txtEmail";
-            this.txtEmail.Size = new System.Drawing.Size(417, 34);
+            this.txtEmail.Size = new System.Drawing.Size(417, 29);
             this.txtEmail.TabIndex = 1;
             // 
             // txtSenha
             // 
             this.txtSenha.Location = new System.Drawing.Point(76, 61);
             this.txtSenha.Name = "txtSenha";
-            this.txtSenha.Size = new System.Drawing.Size(417, 34);
+            this.txtSenha.Size = new System.Drawing.Size(417, 29);
             this.txtSenha.TabIndex = 2;
             // 
             // label1
@@ -78,7 +78,7 @@
             this.label1.AutoSize = true;
             this.label1.Location = new System.Drawing.Point(13, 25);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(71, 28);
+            this.label1.Size = new System.Drawing.Size(57, 21);
             this.label1.TabIndex = 3;
             this.label1.Text = "E-mail:";
             // 
@@ -87,7 +87,7 @@
             this.label2.AutoSize = true;
             this.label2.Location = new System.Drawing.Point(14, 64);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(69, 28);
+            this.label2.Size = new System.Drawing.Size(56, 21);
             this.label2.TabIndex = 4;
             this.label2.Text = "Senha:";
             // 
@@ -96,7 +96,7 @@
             this.label3.AutoSize = true;
             this.label3.Location = new System.Drawing.Point(542, 25);
             this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(118, 28);
+            this.label3.Size = new System.Drawing.Size(96, 21);
             this.label3.TabIndex = 5;
             this.label3.Text = "Restaurante:";
             // 
@@ -121,7 +121,7 @@
             // 
             // btnMaisPedido
             // 
-            this.btnMaisPedido.Location = new System.Drawing.Point(12, 281);
+            this.btnMaisPedido.Location = new System.Drawing.Point(12, 318);
             this.btnMaisPedido.Name = "btnMaisPedido";
             this.btnMaisPedido.Size = new System.Drawing.Size(239, 31);
             this.btnMaisPedido.TabIndex = 9;
@@ -131,7 +131,7 @@
             // 
             // btnPrioridade
             // 
-            this.btnPrioridade.Location = new System.Drawing.Point(12, 318);
+            this.btnPrioridade.Location = new System.Drawing.Point(12, 281);
             this.btnPrioridade.Name = "btnPrioridade";
             this.btnPrioridade.Size = new System.Drawing.Size(239, 31);
             this.btnPrioridade.TabIndex = 10;
@@ -179,15 +179,15 @@
             this.btnPesquisar.Visible = false;
             this.btnPesquisar.Click += new System.EventHandler(this.BtnPesquisar_Click);
             // 
-            // cmbRestaurante
+            // cmbRestaurant
             // 
             this.cmbRestaurant.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.SuggestAppend;
             this.cmbRestaurant.DisplayMember = "Name";
             this.cmbRestaurant.Enabled = false;
             this.cmbRestaurant.FormattingEnabled = true;
             this.cmbRestaurant.Location = new System.Drawing.Point(666, 22);
-            this.cmbRestaurant.Name = "cmbRestaurante";
-            this.cmbRestaurant.Size = new System.Drawing.Size(504, 36);
+            this.cmbRestaurant.Name = "cmbRestaurant";
+            this.cmbRestaurant.Size = new System.Drawing.Size(504, 29);
             this.cmbRestaurant.TabIndex = 6;
             this.cmbRestaurant.SelectedIndexChanged += new System.EventHandler(this.cmbRestaurante_SelectedIndexChanged);
             // 
@@ -201,22 +201,11 @@
             this.btnEmployee.UseVisualStyleBackColor = true;
             this.btnEmployee.Click += new System.EventHandler(this.btnEmployee_Click);
             // 
-            // btnAlterar
-            // 
-            this.btnAlterar.Location = new System.Drawing.Point(12, 530);
-            this.btnAlterar.Name = "btnAlterar";
-            this.btnAlterar.Size = new System.Drawing.Size(239, 37);
-            this.btnAlterar.TabIndex = 14;
-            this.btnAlterar.Text = "Alterar usuário";
-            this.btnAlterar.UseVisualStyleBackColor = true;
-            this.btnAlterar.Click += new System.EventHandler(this.btnAlterar_Click);
-            // 
             // frmLogin
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(11F, 28F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 21F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1200, 694);
-            this.Controls.Add(this.btnAlterar);
             this.Controls.Add(this.btnEmployee);
             this.Controls.Add(this.grpLogin);
             this.Controls.Add(this.btnMenosPedido);
@@ -225,9 +214,10 @@
             this.Controls.Add(this.btnTotal);
             this.Controls.Add(this.dgPedidos);
             this.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.Name = "frmLogin";
-            this.Text = "Form1";
+            this.Text = "Commandee";
             this.Load += new System.EventHandler(this.FrmLogin_Load);
             ((System.ComponentModel.ISupportInitialize)(this.dgPedidos)).EndInit();
             this.grpLogin.ResumeLayout(false);
@@ -251,7 +241,6 @@
         private System.Windows.Forms.Button btnMenosPedido;
         private System.Windows.Forms.GroupBox grpLogin;
         private System.Windows.Forms.Button btnEmployee;
-        private System.Windows.Forms.Button btnAlterar;
         public System.Windows.Forms.ComboBox cmbRestaurant;
         private System.Windows.Forms.Button btnPesquisar;
     }
