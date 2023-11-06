@@ -119,16 +119,16 @@ namespace PrototipoTCC
         {
             var con = DAO_Conexao.con;
 
-            var sql = @"DELETE FROM employment
+            var sql = @"DELETE employment FROM employment
                         INNER JOIN employee ON employee.id = employment.employee_id
                         INNER JOIN restaurant ON restaurant.id = employment.restaurant_id
                         WHERE employee.email = @email
-                        AND restaurant.public_id = @restaurantID";
+                        AND restaurant.public_id = @restId";
 
             using (var command = new MySqlCommand(sql, con))
             {
                 command.Parameters.AddWithValue("@email", email);
-                command.Parameters.AddWithValue("@restaurantID", Restaurant.Id);
+                command.Parameters.AddWithValue("@restId", Restaurant.Id);
 
                 var res = command.ExecuteNonQuery();
 

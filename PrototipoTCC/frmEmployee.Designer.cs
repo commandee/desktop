@@ -96,7 +96,7 @@
             this.btnConfirma.Name = "btnConfirma";
             this.btnConfirma.Size = new System.Drawing.Size(316, 37);
             this.btnConfirma.TabIndex = 6;
-            this.btnConfirma.Text = "Confirmar";
+            this.btnConfirma.Text = "Excluir";
             this.btnConfirma.UseVisualStyleBackColor = true;
             this.btnConfirma.Click += new System.EventHandler(this.btnConfirma_Click);
             // 
@@ -114,7 +114,7 @@
             this.btnBusca.Name = "btnBusca";
             this.btnBusca.Size = new System.Drawing.Size(316, 37);
             this.btnBusca.TabIndex = 8;
-            this.btnBusca.Text = "Confirmar";
+            this.btnBusca.Text = "Buscar";
             this.btnBusca.UseVisualStyleBackColor = true;
             this.btnBusca.Click += new System.EventHandler(this.btnBusca_Click);
             // 

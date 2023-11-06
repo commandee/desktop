@@ -160,10 +160,26 @@ namespace PrototipoTCC
 
             foreach (DataGridViewRow row in dgvEmployee.Rows)
             {
+                /* if (row.Cells["email"].Value.ToString() == emailToSelect)
+                 {
+                     row.Selected = true;
+                     foundRow = true;
+                     break;
+                 }*/
                 if (row.Cells["email"].Value.ToString() == emailToSelect)
                 {
                     row.Selected = true;
                     foundRow = true;
+                    DialogResult result = MessageBox.Show("Deseja remover este funcionário?", "Alerta do Sistema", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+                    if (result == DialogResult.Yes)
+                    {
+                        Controllers.restaurantController.Dismiss(emailToSelect);
+                        updateTable();
+                    }
+                    else
+                    {
+
+                    }
                     break;
                 }
             }
@@ -173,21 +189,7 @@ namespace PrototipoTCC
                 return;
             }
 
-            DialogResult result = MessageBox.Show("Deseja remover este funcionário?", "Alerta do Sistema", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
-                
-            if (result == DialogResult.No)
-                return;
- 
-            try
-            {
-                Controllers.restaurantController.Dismiss(emailToSelect);
-                updateTable();
-                dgvEmployee.ClearSelection();
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine(ex.Message);
-            }
+           
         }
 
         private void btnBusca_Click(object sender, EventArgs e)
@@ -203,16 +205,6 @@ namespace PrototipoTCC
                     if (row.Cells["email"].Value.ToString() == emailSelecionado)
                     {
                         row.Selected = true;
-                        DialogResult result = MessageBox.Show("Deseja remover este funcionário?", "Alerta do Sistema", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
-                        if ( result == DialogResult.Yes)
-                        {
-                            Controllers.restaurantController.Dismiss(emailSelecionado);
-                            updateTable();
-                        } else
-                        {
-
-                        }
-                        break;
                     }
                 }
             }

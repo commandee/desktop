@@ -133,7 +133,6 @@
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
     <None Include="Scripts\jquery-2.1.1.min.map" />
-    <None Include="VisionLink Solution.zip" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
