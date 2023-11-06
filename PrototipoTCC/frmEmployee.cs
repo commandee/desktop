@@ -21,24 +21,43 @@ namespace PrototipoTCC
         }
         bool consulta = false;
         bool delete = false;
-        frmLogin frm = new frmLogin();
+        //oi copilot, tudo bem?
+        //tudo sim, e vc?
+        //tbm, obrigado por perguntar
+        //de nada
+        //vc consegue me ajudar?
+        //claro, no que vc precisa?
+        //preciso fazer com q esse form receba um id de um restaurante e liste os funcionarios dele, usando o nome do restaurante informado em outro form. como fazer?
+        //vc tem o codigo do outro form?
+        //sim, tenho
+        //vc pode me mandar?
+        //por onde?
+        //pelo discord
+        //qual seu discord?
+        //é o mesmo do github
+        //copilot só?
+        //sim
+        //na verdade, posso copiar aqui em comentário e vc me fala oq fazer?
+        //pode sim
+        //ok, pera
+        //ok
 
 
         public void updateTable()
         {
-            string restaurantId = frm.cmbRestaurant.SelectedValue.ToString();
             try
             {
                 dgvEmployee.ClearSelection();
 
-                var sql = @"SELECT employee.username, employee.email, employee.public_id as id 
-                            FROM employment 
-                            INNER JOIN employee ON employee.id = employment.employee_id 
-                            INNER JOIN restaurant ON restaurant.id = @restaurantId
-                            LIMIT 1000";
+                var sql = @"SELECT employee.public_id as id, employee.username, employee.email
+                            FROM employment
+                            INNER JOIN employee ON employee.id = employment.employee_id
+                            INNER JOIN restaurant ON restaurant.id = employment.restaurant_id
+                            WHERE restaurant.public_id = @restId";
+               
 
                 using (var command = new MySqlCommand(sql, DAO_Conexao.con)) {
-                    command.Parameters.AddWithValue("@restaurantId", restaurantId);
+                    command.Parameters.AddWithValue("@restId", Controllers.restaurantController.Restaurant.Id);
 
                     var adapter = new MySqlDataAdapter(command);
                     var dt = new DataTable();
@@ -76,6 +95,7 @@ namespace PrototipoTCC
 
         private void frmEmployee_Load(object sender, EventArgs e)
         {
+            updateTable();
             txtBusca.Visible = false;
             btnBusca.Visible = false;
             dgvEmployee.ClearSelection();
@@ -183,6 +203,15 @@ namespace PrototipoTCC
                     if (row.Cells["email"].Value.ToString() == emailSelecionado)
                     {
                         row.Selected = true;
+                        DialogResult result = MessageBox.Show("Deseja remover este funcionário?", "Alerta do Sistema", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+                        if ( result == DialogResult.Yes)
+                        {
+                            Controllers.restaurantController.Dismiss(emailSelecionado);
+                            updateTable();
+                        } else
+                        {
+
+                        }
                         break;
                     }
                 }

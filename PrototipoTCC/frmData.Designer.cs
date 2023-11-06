@@ -125,7 +125,7 @@
             this.btnMaisPedido.Name = "btnMaisPedido";
             this.btnMaisPedido.Size = new System.Drawing.Size(239, 31);
             this.btnMaisPedido.TabIndex = 9;
-            this.btnMaisPedido.Text = "Item mais pedido";
+            this.btnMaisPedido.Text = "Itens mais pedidos";
             this.btnMaisPedido.UseVisualStyleBackColor = true;
             this.btnMaisPedido.Click += new System.EventHandler(this.BtnMaisPedido_Click);
             // 
@@ -135,7 +135,7 @@
             this.btnPrioridade.Name = "btnPrioridade";
             this.btnPrioridade.Size = new System.Drawing.Size(239, 31);
             this.btnPrioridade.TabIndex = 10;
-            this.btnPrioridade.Text = "Item com mais prioridade";
+            this.btnPrioridade.Text = "Itens de maior prioridade";
             this.btnPrioridade.UseVisualStyleBackColor = true;
             this.btnPrioridade.Click += new System.EventHandler(this.BtnPrioridade_Click);
             // 
@@ -145,7 +145,7 @@
             this.btnMenosPedido.Name = "btnMenosPedido";
             this.btnMenosPedido.Size = new System.Drawing.Size(239, 31);
             this.btnMenosPedido.TabIndex = 11;
-            this.btnMenosPedido.Text = "Item menos pedido";
+            this.btnMenosPedido.Text = "Itens menos pedidos";
             this.btnMenosPedido.UseVisualStyleBackColor = true;
             this.btnMenosPedido.Click += new System.EventHandler(this.BtnMenosPedido_Click);
             // 

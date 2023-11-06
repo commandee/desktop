@@ -218,14 +218,24 @@ namespace PrototipoTCC
 
         private void cmbRestaurante_SelectedIndexChanged(object sender, EventArgs e)
         {
-            
+            if (cmbRestaurant.SelectedIndex == -1)
+            {
+                return;
+            }
             Controllers.restaurantController.Login(cmbRestaurant.Text);
         }
 
         private void BtnPesquisar_Click(object sender, EventArgs e)
         {
+            
             if (cmbRestaurant.SelectedIndex == -1)
+            {
                 return;
+            } else
+            {
+                string restName = cmbRestaurant.Text;
+            }
+               
 
             this.Size = new Size(1216, 733);
         }
