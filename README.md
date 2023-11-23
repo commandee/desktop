@@ -11,5 +11,5 @@ A instalação deve ser feita do seguinte modo:
 3. Abrir a solução do projeto (arquivo **CommandeeDesktop.sln**) no Microsoft Visual Studio( versão 2019 e superiores).
 
 # Dúvidas
-### Posso utilizar o aplicativo num dispositivo com Kernel Linux? 
+### Posso utilizar o aplicativo num dispositivo com sistema operacional da família **Unix**? 
 Não. O Microsoft Visual Studio só é compatível com dispositivos com o sistema operacional da família **Windows**.
