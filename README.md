@@ -1,4 +1,4 @@
-# desktop
+# Commandee Desktop
 Dashboard feita em C# para gerentes e donos de restaurante, visando o controle de:
 - Itens
 - Pedidos
